@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Momently – Event Package Marketplace. Make every moment matter. Founded by FTU students with passion.">
+  <title>About Momently – Make Every Moment Matter</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <style>
+    /* Vibrant Atmosphere & Modern Visuals */
+    .about-hero {
+      padding-top: calc(var(--nav-height) + var(--space-4xl));
+      padding-bottom: var(--space-3xl);
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 15%, rgba(2, 132, 199, 0.14) 0%, rgba(236, 72, 153, 0.1) 40%, rgba(248, 250, 252, 1) 80%);
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.22) 0%, transparent 70%);
+      top: -60px;
+      left: 10%;
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+      animation: float 7s ease-in-out infinite;
+    }
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(2, 132, 199, 0.22) 0%, transparent 70%);
+      top: -40px;
+      right: 12%;
+      border-radius: 50%;
+      filter: blur(45px);
+      pointer-events: none;
+      animation: float 9s ease-in-out infinite reverse;
+    }
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 24px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(236, 72, 153, 0.35);
+      color: var(--color-primary);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+      box-shadow: 0 4px 20px rgba(2, 132, 199, 0.12), 0 2px 10px rgba(236, 72, 153, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+    .about-main-title {
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-family: var(--font-heading);
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 45%, #E76F51 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #1B4332;
+      margin-bottom: var(--space-md);
+      line-height: 1.2;
+      position: relative;
+      z-index: 2;
+      font-weight: 800;
+    }
+    .about-hero p,
+    .about-main-desc {
+      max-width: 860px;
+      margin: 0 auto;
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: #1F3328 !important; /* Deep forest charcoal, crisp & highly readable */
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px 32px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(45, 106, 79, 0.2);
+      box-shadow: 0 8px 30px rgba(45, 106, 79, 0.08);
+    }
+
+    /* Section Boxes with Rich Color Accents */
+    .about-section-box {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(2, 132, 199, 0.2);
+      box-shadow: 0 12px 35px -5px rgba(2, 132, 199, 0.1), 0 8px 16px -4px rgba(236, 72, 153, 0.08);
+      padding: var(--space-3xl);
+      margin-bottom: var(--space-3xl);
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition-normal);
+    }
+    .about-section-box:hover {
+      box-shadow: 0 20px 45px -5px rgba(2, 132, 199, 0.18), 0 10px 20px -4px rgba(236, 72, 153, 0.14);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+    .about-split {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+    .tag-label {
+      color: var(--color-primary);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-full);
+    }
+    .section-headline {
+      font-size: var(--text-3xl);
+      font-family: var(--font-heading);
+      color: var(--color-secondary);
+      margin-top: var(--space-xs);
+      margin-bottom: var(--space-lg);
+      line-height: 1.3;
+    }
+    .section-paragraph {
+      font-size: var(--text-base);
+      line-height: 1.85;
+      color: #1F3328;
+      font-weight: 500;
+      margin-bottom: var(--space-md);
+    }
+    .highlight-quote {
+      border-left: 4px solid var(--color-accent);
+      padding: var(--space-md) var(--space-lg);
+      font-style: italic;
+      color: var(--color-secondary);
+      margin: var(--space-lg) 0;
+      font-size: var(--text-base);
+      background: linear-gradient(90deg, rgba(236, 72, 153, 0.08) 0%, rgba(2, 132, 199, 0.08) 100%);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      font-weight: 500;
+    }
+    .curved-photo {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+      height: 390px;
+      position: relative;
+    }
+    .curved-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .curved-photo:hover img {
+      transform: scale(1.06);
+    }
+
+    /* Vibrant Two Column Goal & Vision */
+    .goal-vision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      margin-bottom: var(--space-3xl);
+    }
+    .highlight-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(2, 132, 199, 0.18);
+      padding: var(--space-3xl);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition-normal);
+    }
+    .highlight-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(2, 132, 199, 0.16), 0 8px 20px rgba(236, 72, 153, 0.12);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+    .highlight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--gradient-primary);
+    }
+    .card-icon-round {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.15) 0%, rgba(236, 72, 153, 0.18) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      margin-bottom: var(--space-lg);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+    }
+    .vision-slogan {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--space-sm);
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* Colorful Founders Section */
+    .founders-wrap {
+      text-align: center;
+      padding: var(--space-3xl) 0;
+    }
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: var(--space-xl);
+      margin-top: var(--space-3xl);
+      margin-bottom: var(--space-3xl);
+    }
+    .founder-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-xl);
+      border: 1.5px solid rgba(2, 132, 199, 0.2);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      padding: var(--space-xl) var(--space-md);
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .founder-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 36px rgba(2, 132, 199, 0.18), 0 8px 18px rgba(236, 72, 153, 0.14);
+      border-color: var(--color-primary);
+    }
+    .founder-avatar-wrap {
+      width: 140px;
+      height: 155px;
+      border-radius: var(--radius-xl);
+      padding: 8px;
+      background: radial-gradient(circle at 50% 60%, rgba(2, 132, 199, 0.12) 0%, rgba(236, 72, 153, 0.08) 50%, rgba(255, 255, 255, 0.7) 100%);
+      border: 1.5px solid rgba(2, 132, 199, 0.2);
+      margin-bottom: var(--space-md);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .founder-avatar-wrap:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2);
+    }
+    .founder-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: transparent;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+      transition: transform 0.35s ease;
+    }
+    .founder-card:hover .founder-avatar-img {
+      transform: scale(1.08) translateY(-4px);
+    }
+    .founder-name {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-secondary);
+      margin-top: var(--space-xs);
+      margin-bottom: 4px;
+    }
+    .founder-role {
+      font-size: var(--text-xs);
+      color: var(--color-primary);
+      font-weight: 600;
+      padding: 0 var(--space-sm);
+    }
+    .founders-conclusion {
+      max-width: 860px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.08) 0%, rgba(245, 158, 11, 0.12) 100%);
+      border: 1.5px dashed var(--color-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-2xl);
+      line-height: 1.85;
+      font-size: var(--text-base);
+      color: var(--color-secondary);
+      box-shadow: 0 8px 25px rgba(225, 29, 72, 0.08);
+    }
+
+    @media (max-width: 900px) {
+      .about-split {
+        grid-template-columns: 1fr;
+      }
+      .goal-vision-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Header with Language Switcher -->
+  <header class="navbar" id="navbar"></header>
+
+  <!-- Hero Header: About Momently -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="hero-badge-pill">
+        <span data-i18n="about_hero_badge">✨ TỪ SINH VIÊN FTU VỚI TRỌN VẸN ĐAM MÊ ✨</span>
+      </div>
+      <h1 class="about-main-title" data-i18n="about_main_title">Về Momently</h1>
+      <p class="about-main-desc" data-i18n="about_main_desc">
+        Momently là nền tảng hỗ trợ tổ chức sự kiện được xây dựng với mong muốn biến quá trình lên kế hoạch và quản lý sự kiện trở nên đơn giản, thuận tiện và hiệu quả hơn. Từ những buổi gặp gỡ nhỏ đến các sự kiện lớn, Momently giúp người dùng quản lý mọi thứ một cách có hệ thống và tập trung hơn vào những khoảnh khắc thực sự đáng nhớ.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content Body -->
+  <main class="section">
+    <div class="container">
+      
+      <!-- Section 1: Why Momently -->
+      <div class="about-section-box">
+        <div class="about-split">
+          <div>
+            <span class="tag-label" data-i18n="about_why_tag">LÝ DO HÌNH THÀNH</span>
+            <h2 class="section-headline" data-i18n="about_why_title">Why Momently</h2>
+            <p class="section-paragraph" data-i18n="about_why_p1">
+              Giữa cuộc sống đô thị bộn bề, đôi khi thật khó để dành thời gian cho những người thân yêu và những dịp quan trọng. Chúng ta vẫn muốn tổ chức một sinh nhật thật vui, một buổi gặp mặt ấm áp hay một sự kiện thật đặc biệt, nhưng không phải ai cũng có nhiều thời gian, kinh nghiệm hay một ngân sách lớn.
+            </p>
+            <div class="highlight-quote" data-i18n="about_why_quote">
+              "Thấu hiểu điều này, chúng tôi tạo ra Momently để bạn có thể ở bên những người mình yêu quý và tạo nên những khoảnh khắc đáng nhớ."
+            </div>
+            <p class="section-paragraph" data-i18n="about_why_p2">
+              Chúng tôi muốn giúp việc tổ chức sự kiện trở nên dễ dàng, nhanh chóng hơn, từ việc lên ý tưởng, sắp xếp công việc đến kiểm soát ngân sách.
+            </p>
+            <div style="display:flex;gap:12px;margin-top:var(--space-xl);flex-wrap:wrap;">
+              <a href="explore.html" class="btn btn-primary" data-i18n="about_why_cta_explore">Khám phá gói sự kiện</a>
+              <a href="vendors.html" class="btn btn-secondary" data-i18n="about_why_cta_vendors">Mạng lưới đối tác</a>
+            </div>
+          </div>
+          <div class="curved-photo">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop" alt="Momently Celebration Moments">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Our Goal & Our Vision (2 Colorful Cards) -->
+      <div class="goal-vision-grid">
+        <!-- Our Goal -->
+        <div class="highlight-card">
+          <div class="card-icon-round">🎯</div>
+          <span class="tag-label" data-i18n="about_goal_tag">MỤC TIÊU CỦA CHÚNG TÔI</span>
+          <h2 class="section-headline" style="font-size:var(--text-2xl);" data-i18n="about_goal_title">Our Goal</h2>
+          <p class="section-paragraph" data-i18n="about_goal_desc">
+            Mục tiêu của Momently là trở thành một người bạn đồng hành đáng tin cậy trong quá trình tổ chức sự kiện. Chúng tôi hướng đến việc giảm bớt những công việc phức tạp, tiết kiệm thời gian, với mong muốn hỗ trợ các hội nhóm, gia đình và bạn bè kết nối với các đơn vị tổ chức sự kiện uy tín, chuyên nghiệp để tạo nên những khoảnh khắc đáng nhớ.
+          </p>
+        </div>
+
+        <!-- Our Vision -->
+        <div class="highlight-card">
+          <div class="card-icon-round">🌟</div>
+          <span class="tag-label" data-i18n="about_vision_tag">TẦM NHÌN CHIẾN LƯỢC</span>
+          <h2 class="section-headline" style="font-size:var(--text-2xl);" data-i18n="about_vision_title">Our Vision</h2>
+          <div class="vision-slogan" data-i18n="about_vision_slogan">"Make every moment matter."</div>
+          <p class="section-paragraph" data-i18n="about_vision_desc">
+            Momently hướng đến việc trở thành nền tảng giúp mọi người dễ dàng tạo nên những sự kiện được tổ chức tốt và những khoảnh khắc có ý nghĩa — bởi mỗi sự kiện đều xứng đáng được ghi nhớ.
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 3: Our Founders -->
+      <div class="founders-wrap">
+        <span class="tag-label" data-i18n="about_founders_tag">ĐỘI NGŨ SÁNG LẬP</span>
+        <h2 class="section-headline" style="margin-bottom:var(--space-xs);" data-i18n="about_founders_title">Our Founders</h2>
+        <p style="color:var(--color-primary);font-size:var(--text-base);font-weight:700;letter-spacing:1px;font-style:italic;" data-i18n="about_founders_subtitle">
+          From FTUers with passion
+        </p>
+
+        <!-- 5 Founders Grid -->
+        <div class="founders-grid" id="foundersGrid"></div>
+
+        <!-- Founders Concluding Statement -->
+        <div class="founders-conclusion" data-i18n-html="about_founders_conclusion">
+          💡 <strong>Nhóm phát triển Momently</strong> từ mong muốn tạo ra một giải pháp thực tế cho những khó khăn thường gặp khi tổ chức sự kiện. 
+          Momently là dự án kết hợp giữa <strong>tư duy kinh doanh</strong>, <strong>công nghệ</strong> và <strong>sự quan tâm sâu sắc đến trải nghiệm người dùng</strong>.
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('about');
+
+    function renderFounders() {
+      const lang = getLang();
+      const grid = document.getElementById('foundersGrid');
+      if (!grid || typeof founders === 'undefined') return;
+
+      grid.innerHTML = founders.map((f, idx) => {
+        const role = lang === 'vi' ? f.role_vi : f.role_en;
+        return `
+          <div class="founder-card" style="--delay: ${idx}">
+            <div class="founder-avatar-wrap">
+              <img src="${f.avatar}" alt="${f.name}" class="founder-avatar-img" loading="lazy">
+            </div>
+            <h3 class="founder-name">${f.name}</h3>
+            <p class="founder-role">${role}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderFounders();
+
+    // Hook language switcher
+    function onLangChange() {
+      renderFounders();
+    }
+    window.addEventListener('langchange', () => {
+      onLangChange();
+    });
+  </script>
+</body>
+</html>

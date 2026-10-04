@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập – Tài khoản Google</title>
+  <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background-color: #202124;
+      color: #e8eaed;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      user-select: none;
+    }
+    .header {
+      padding: 16px 24px 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-text {
+      font-size: 14px;
+      color: #e8eaed;
+      font-weight: 500;
+    }
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 16px 24px;
+    }
+    .card {
+      background: #202124;
+      width: 100%;
+      max-width: 448px;
+      border: 1px solid #3c4043;
+      border-radius: 8px;
+      padding: 32px 32px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Google Loading Progress Bar */
+    .progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #3c4043;
+      overflow: hidden;
+      display: none;
+    }
+    .progress-bar .indeterminate {
+      position: absolute;
+      background-color: #8ab4f8;
+      height: 100%;
+      width: 50%;
+      animation: google-indeterminate 1.2s infinite ease-in-out;
+    }
+    @keyframes google-indeterminate {
+      0% { left: -50%; width: 30%; }
+      50% { left: 30%; width: 50%; }
+      100% { left: 100%; width: 30%; }
+    }
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .app-icon {
+      width: 40px;
+      height: 40px;
+      background: #2c2f33;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 1px solid #3c4043;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: 400;
+      color: #e8eaed;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #9aa0a6;
+      margin-bottom: 24px;
+    }
+    .subtitle a {
+      color: #8ab4f8;
+      text-decoration: none;
+    }
+
+    /* Accounts List */
+    .accounts-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .account-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      border-bottom: 1px solid #2d3033;
+    }
+    .account-item:hover {
+      background-color: #2c2f33;
+    }
+    .account-item:last-child {
+      border-bottom: none;
+    }
+    .acc-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #1a73e8;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    .acc-avatar.alt {
+      background: #188038;
+    }
+    .acc-avatar.other {
+      background: transparent;
+      border: 1.5px solid #9aa0a6;
+      color: #9aa0a6;
+    }
+    .acc-info {
+      flex: 1;
+      overflow: hidden;
+    }
+    .acc-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #e8eaed;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .acc-email {
+      font-size: 12px;
+      color: #9aa0a6;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    /* Custom Input View */
+    #manualInputView {
+      display: none;
+    }
+    .google-input-group {
+      margin-bottom: 18px;
+    }
+    .google-input-group label {
+      display: block;
+      font-size: 12px;
+      color: #8ab4f8;
+      margin-bottom: 6px;
+    }
+    .google-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: transparent;
+      border: 1.5px solid #8ab4f8;
+      border-radius: 4px;
+      color: #e8eaed;
+      font-size: 14px;
+      outline: none;
+    }
+    .google-input:focus {
+      border-color: #a8c7fa;
+    }
+    .btn-action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+    }
+    .btn-text {
+      background: none;
+      border: none;
+      color: #8ab4f8;
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+    .btn-primary {
+      background: #8ab4f8;
+      color: #202124;
+      border: none;
+      padding: 9px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-primary:hover {
+      background: #a8c7fa;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      font-size: 12px;
+      color: #9aa0a6;
+      line-height: 1.5;
+      margin-top: 24px;
+    }
+    .disclaimer a {
+      color: #8ab4f8;
+      text-decoration: none;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #9aa0a6;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-links a {
+      color: #9aa0a6;
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      color: #e8eaed;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Google Header -->
+  <div class="header">
+    <svg width="24" height="24" viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+      <path fill="#FBBC05" d="M5.28 14.27A7.17 7.17 0 0 1 4.9 12c0-.79.14-1.57.38-2.27V6.58H1.25A11.96 11.96 0 0 0 0 12c0 1.92.45 3.74 1.25 5.42l4.03-3.15z"/>
+      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+    </svg>
+    <span class="header-text">Đăng nhập bằng Google</span>
+  </div>
+
+  <div class="main-wrapper">
+    <div class="card">
+      <!-- Loading progress indicator -->
+      <div class="progress-bar" id="progressBar">
+        <div class="indeterminate"></div>
+      </div>
+
+      <div class="brand-logo-wrap">
+        <div class="app-icon">💍</div>
+        <div>
+          <div style="font-size:15px;font-weight:500;color:#e8eaed;">Momently Fairytale</div>
+          <div style="font-size:11px;color:#9aa0a6;">momently.vn</div>
+        </div>
+      </div>
+
+      <h1 class="title">Chọn tài khoản</h1>
+      <p class="subtitle">Tiếp tục tới <a href="#">Momently</a></p>
+
+      <!-- Account List View -->
+      <div id="accountListView">
+        <div class="accounts-list" id="accountsListContainer">
+          <!-- Dynamically populated or rendered -->
+        </div>
+
+        <div class="disclaimer">
+          Trước khi sử dụng Momently, bạn có thể xem <a href="#">Chính sách quyền riêng tư</a> và <a href="#">Điều khoản dịch vụ</a> của ứng dụng này.
+        </div>
+      </div>
+
+      <!-- Use another account input view -->
+      <div id="manualInputView">
+        <div class="google-input-group">
+          <label>Email hoặc số điện thoại của bạn</label>
+          <input type="email" id="customEmail" class="google-input" placeholder="tenbancuaban@gmail.com" onkeydown="if(event.key==='Enter') submitCustomAccount()" autofocus>
+        </div>
+        <div class="google-input-group">
+          <label>Họ và tên hiển thị</label>
+          <input type="text" id="customName" class="google-input" placeholder="Ví dụ: Nguyễn Văn A" onkeydown="if(event.key==='Enter') submitCustomAccount()">
+        </div>
+        <div class="btn-action-row">
+          <button type="button" class="btn-text" onclick="showAccountList()">← Quay lại</button>
+          <button type="button" class="btn-primary" onclick="submitCustomAccount()">Tiếp theo</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>Tiếng Việt</div>
+    <div class="footer-links">
+      <a href="#">Trợ giúp</a>
+      <a href="#">Quyền riêng tư</a>
+      <a href="#">Điều khoản</a>
+    </div>
+  </div>
+
+  <script>
+    // Load accounts from storage or provide sensible defaults
+    function getStoredAccounts() {
+      let accounts = [];
+      try {
+        const raw = localStorage.getItem('momently_known_google_accounts');
+        if (raw) accounts = JSON.parse(raw);
+      } catch (e) {}
+
+      // If empty, generate standard device accounts for realistic demo
+      if (!accounts || accounts.length === 0) {
+        accounts = [
+          {
+            name: 'Tài khoản cá nhân',
+            email: 'user.device@gmail.com',
+            avatar: '👤'
+          }
+        ];
+      }
+      return accounts;
+    }
+
+    function renderAccounts() {
+      const container = document.getElementById('accountsListContainer');
+      const accounts = getStoredAccounts();
+      container.innerHTML = '';
+
+      accounts.forEach((acc, idx) => {
+        const initial = acc.name ? acc.name.charAt(0).toUpperCase() : 'G';
+        const item = document.createElement('div');
+        item.className = 'account-item';
+        item.onclick = () => selectAccount(acc);
+        item.innerHTML = `
+          <div class="acc-avatar ${idx % 2 === 1 ? 'alt' : ''}">${initial}</div>
+          <div class="acc-info">
+            <div class="acc-name">${escapeHtml(acc.name)}</div>
+            <div class="acc-email">${escapeHtml(acc.email)}</div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      // "Use another account" row
+      const otherItem = document.createElement('div');
+      otherItem.className = 'account-item';
+      otherItem.onclick = showManualInput;
+      otherItem.innerHTML = `
+        <div class="acc-avatar other">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </div>
+        <div class="acc-info">
+          <div class="acc-name" style="font-weight:400;">Sử dụng một tài khoản khác</div>
+        </div>
+      `;
+      container.appendChild(otherItem);
+    }
+
+    function selectAccount(account) {
+      if (!account || !account.email) return;
+
+      // 1. Show Google loading progress bar
+      const pb = document.getElementById('progressBar');
+      if (pb) pb.style.display = 'block';
+
+      // 2. Prepare user object
+      const googleUser = {
+        id: 'user-google-' + Date.now(),
+        name: account.name || account.email.split('@')[0],
+        email: account.email,
+        phone: '0859062212',
+        role: 'user',
+        provider: 'google',
+        avatar: account.avatar || '🌐',
+        searches: [],
+        bookings: [],
+        createdAt: new Date().toISOString()
+      };
+
+      // 3. Directly save session to localStorage (guarantees session across windows and file://)
+      try {
+        localStorage.setItem('momently_user', JSON.stringify(googleUser));
+        localStorage.setItem('momently_google_auth_done', '1');
+
+        const users = JSON.parse(localStorage.getItem('momently_users') || '[]');
+        const idx = users.findIndex(u => u.email.toLowerCase() === googleUser.email.toLowerCase());
+        if (idx >= 0) {
+          users[idx] = googleUser;
+        } else {
+          users.push(googleUser);
+        }
+        localStorage.setItem('momently_users', JSON.stringify(users));
+
+        saveKnownAccount(account);
+      } catch (err) {
+        console.error('Storage error:', err);
+      }
+
+      // 4. Try notifying parent window if available
+      try {
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage({
+            type: 'GOOGLE_AUTH_SUCCESS',
+            account: googleUser
+          }, '*');
+
+          if (typeof window.opener.onGoogleAuthSuccess === 'function') {
+            window.opener.onGoogleAuthSuccess(googleUser);
+          }
+        }
+      } catch (e) {
+        // Safe cross-origin catch
+      }
+
+      // 5. Close popup or redirect to homepage
+      setTimeout(() => {
+        let isClosed = false;
+        try {
+          if (window.opener && !window.opener.closed) {
+            window.close();
+            isClosed = true;
+          }
+        } catch (e) {}
+
+        // Fallback: If not in popup or browser prevented window.close(), redirect straight to index.html
+        setTimeout(() => {
+          window.location.href = 'index.html?login=google';
+        }, 300);
+      }, 700);
+    }
+
+    function showManualInput() {
+      document.getElementById('accountListView').style.display = 'none';
+      document.getElementById('manualInputView').style.display = 'block';
+      document.getElementById('customEmail').focus();
+    }
+
+    function showAccountList() {
+      document.getElementById('manualInputView').style.display = 'none';
+      document.getElementById('accountListView').style.display = 'block';
+    }
+
+    function submitCustomAccount() {
+      const emailInput = document.getElementById('customEmail');
+      const nameInput = document.getElementById('customName');
+      let email = emailInput.value.trim();
+      let name = nameInput.value.trim();
+
+      if (!email) {
+        emailInput.focus();
+        return;
+      }
+      if (!email.includes('@')) {
+        email += '@gmail.com';
+      }
+      if (!name) {
+        name = email.split('@')[0];
+      }
+
+      selectAccount({
+        name: name,
+        email: email,
+        avatar: name.charAt(0).toUpperCase()
+      });
+    }
+
+    function saveKnownAccount(acc) {
+      try {
+        let accounts = getStoredAccounts();
+        const existingIdx = accounts.findIndex(a => a.email.toLowerCase() === acc.email.toLowerCase());
+        if (existingIdx >= 0) {
+          accounts[existingIdx] = acc;
+        } else {
+          accounts.unshift(acc);
+        }
+        localStorage.setItem('momently_known_google_accounts', JSON.stringify(accounts.slice(0, 5)));
+      } catch (e) {}
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    renderAccounts();
+  </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View your saved searches, event package history, and bookings on Momently.">
+  <title>My Account & History – Momently</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <style>
+    .profile-page {
+      padding-top: calc(var(--nav-height) + var(--space-2xl));
+      padding-bottom: var(--space-4xl);
+      min-height: 100vh;
+      background: var(--color-bg);
+    }
+    .profile-header-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-2xl);
+      border: 1px solid var(--color-border-light);
+    }
+    .profile-user-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .profile-stats-row {
+      display: flex;
+      gap: var(--space-2xl);
+    }
+    .profile-stat-box {
+      text-align: center;
+    }
+    .profile-stat-num {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-primary);
+      font-family: var(--font-heading);
+    }
+    .profile-stat-lbl {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .profile-tabs {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+      border-bottom: 2px solid var(--color-border-light);
+    }
+    .profile-tab-btn {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .profile-tab-btn.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+    .search-history-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+      border: 1px solid var(--color-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      transition: all var(--transition-fast);
+    }
+    .search-history-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary-light);
+    }
+    .search-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .search-tag {
+      font-size: var(--text-xs);
+      background: var(--color-bg-alt);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      color: var(--color-text);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .booking-history-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+      border: 1px solid var(--color-border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      background: #e6f7ec;
+      color: #1b873f;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <main class="profile-page">
+    <div class="container">
+      <!-- Profile Header -->
+      <div class="profile-header-card" id="profileHeader">
+        <div class="profile-user-info">
+          <div class="profile-avatar" id="userAvatar">U</div>
+          <div>
+            <h1 id="userName" style="font-size:var(--text-2xl);margin-bottom:4px;">User Name</h1>
+            <p id="userEmail" style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:2px;">user@example.com</p>
+            <span id="userPhone" style="color:var(--color-text-muted);font-size:var(--text-xs);">📞 0901234567</span>
+          </div>
+        </div>
+        <div class="profile-stats-row">
+          <div class="profile-stat-box">
+            <div class="profile-stat-num" id="statSearchesCount">0</div>
+            <div class="profile-stat-lbl" data-i18n="profile_stat_searches">Lần tìm kiếm</div>
+          </div>
+          <div class="profile-stat-box">
+            <div class="profile-stat-num" id="statBookingsCount">0</div>
+            <div class="profile-stat-lbl" data-i18n="profile_stat_bookings">Đơn đã đặt</div>
+          </div>
+          <div class="profile-stat-box">
+            <button class="btn btn-sm btn-outline" onclick="logout()" style="margin-top:4px;" data-i18n="profile_logout_btn">
+              🚪 Đăng xuất
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Description Banner -->
+      <div style="background:linear-gradient(135deg, rgba(200, 149, 108, 0.1), rgba(232, 180, 184, 0.15));border-radius:var(--radius-md);padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-xl);display:flex;align-items:center;gap:12px;">
+        <span style="font-size:1.5rem;">✨</span>
+        <div style="font-size:var(--text-sm);" data-i18n="profile_banner_text">
+          <strong>Lịch sử tìm kiếm được lưu tự động:</strong> Mỗi khi bạn lựa chọn Sự kiện → Ngân sách → Phong cách trên trang Khám phá, Momently sẽ tự động lưu lại vào tài khoản này để bạn có thể xem lại bất kỳ lúc nào!
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="profile-tabs">
+        <button class="profile-tab-btn active" id="tabBtnSearches" onclick="switchProfileTab('searches')">
+          🔍 <span id="lblSearchesTab" data-i18n="profile_tab_searches">Lịch sử tìm kiếm</span> (<span id="tabCountSearches">0</span>)
+        </button>
+        <button class="profile-tab-btn" id="tabBtnBookings" onclick="switchProfileTab('bookings')">
+          🎉 <span id="lblBookingsTab" data-i18n="profile_tab_bookings">Đơn đặt chỗ</span> (<span id="tabCountBookings">0</span>)
+        </button>
+      </div>
+
+      <!-- Tab Content 1: Saved Searches -->
+      <div id="searchesContainer">
+        <div id="searchesList"></div>
+      </div>
+
+      <!-- Tab Content 2: Bookings -->
+      <div id="bookingsContainer" style="display:none;">
+        <div id="bookingsList"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('profile');
+
+    // If not logged in, prompt to log in or create demo account
+    let user = getUser();
+    if (!user) {
+      // Auto switch or alert
+      window.location.href = 'login.html';
+    }
+
+    function renderProfileHeader() {
+      user = getUser();
+      if (!user) return;
+
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+      const avatarEl = document.getElementById('userAvatar');
+      if (user.avatar && user.avatar.startsWith('http')) {
+        avatarEl.innerHTML = `<img src="${user.avatar}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+      } else {
+        avatarEl.textContent = (user.avatar && user.avatar.length <= 2) ? user.avatar : user.name.charAt(0).toUpperCase();
+      }
+
+      const searchCount = (user.searches || []).length;
+      const bookingCount = (user.bookings || []).length;
+
+      document.getElementById('statSearchesCount').textContent = searchCount;
+      document.getElementById('statBookingsCount').textContent = bookingCount;
+      document.getElementById('tabCountSearches').textContent = searchCount;
+      document.getElementById('tabCountBookings').textContent = bookingCount;
+    }
+
+    function switchProfileTab(tab) {
+      const isSearches = tab === 'searches';
+      document.getElementById('tabBtnSearches').classList.toggle('active', isSearches);
+      document.getElementById('tabBtnBookings').classList.toggle('active', !isSearches);
+      document.getElementById('searchesContainer').style.display = isSearches ? 'block' : 'none';
+      document.getElementById('bookingsContainer').style.display = isSearches ? 'none' : 'block';
+    }
+
+    function renderSavedSearches() {
+      user = getUser();
+      const list = document.getElementById('searchesList');
+      const searches = user ? (user.searches || []) : [];
+      const lang = getLang();
+
+      if (searches.length === 0) {
+        list.innerHTML = `
+          <div class="no-results" style="display:block;background:var(--color-bg-card);border-radius:var(--radius-lg);padding:var(--space-3xl);">
+            <div class="no-results-icon">🔎</div>
+            <h3>${lang === 'vi' ? 'Chưa có lịch sử tìm kiếm' : 'No saved searches yet'}</h3>
+            <p style="margin-top:8px;color:var(--color-text-muted);">${lang === 'vi' ? 'Hãy khám phá các gói sự kiện và hệ thống sẽ tự động lưu lại tiêu chí tìm kiếm của bạn!' : 'Start exploring packages and your preferences will be automatically saved here.'}</p>
+            <a href="explore.html" class="btn btn-primary" style="margin-top:var(--space-lg);display:inline-block;text-decoration:none;">
+              ✨ ${lang === 'vi' ? 'Bắt đầu khám phá ngay' : 'Start Exploring'}
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = searches.map((s, idx) => {
+        const ev = typeof eventTypes !== 'undefined' ? eventTypes.find(e => e.id === s.event) : null;
+        const evName = s.event ? ((ev ? (lang === 'vi' ? ev.name_vi : ev.name_en) : '') || t('event_' + s.event) || s.event) : (lang === 'vi' ? 'Mọi sự kiện' : 'Any Event');
+        const stName = s.style ? t('style_' + s.style) : (lang === 'vi' ? 'Mọi phong cách' : 'Any Style');
+        const bgName = s.budget ? t('budget_' + s.budget) : (lang === 'vi' ? 'Mọi ngân sách' : 'Any Budget');
+        const dateStr = s.date ? s.date : (lang === 'vi' ? 'Chưa chọn ngày' : 'Flexible date');
+        const timeAgo = s.timestamp ? new Date(s.timestamp).toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US') : '';
+
+        return `
+          <div class="search-history-card">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:1.4rem;">${ev ? ev.icon : '🎯'}</span>
+                <strong style="font-size:var(--text-lg);">${evName}</strong>
+                ${timeAgo ? `<span style="font-size:var(--text-xs);color:var(--color-text-muted);">(${timeAgo})</span>` : ''}
+              </div>
+              <div class="search-tags">
+                <span class="search-tag">💰 ${bgName}</span>
+                <span class="search-tag">🎨 ${stName}</span>
+                <span class="search-tag">📅 ${dateStr}</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <a href="explore.html?event=${s.event || ''}&budget=${s.budget || ''}&style=${s.style || ''}" class="btn btn-primary btn-sm" style="text-decoration:none;">
+                🔍 ${lang === 'vi' ? 'Xem các gói phù hợp' : 'View Matching Packages'}
+              </a>
+              <button class="btn btn-sm btn-outline" onclick="deleteSearch(${idx})" title="Xóa tìm kiếm này">
+                🗑️
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function deleteSearch(index) {
+      user = getUser();
+      if (!user || !user.searches) return;
+      user.searches.splice(index, 1);
+      localStorage.setItem('momently_user', JSON.stringify(user));
+      
+      const users = JSON.parse(localStorage.getItem('momently_users') || '[]');
+      const idx = users.findIndex(u => u.id === user.id);
+      if (idx >= 0) { users[idx] = user; localStorage.setItem('momently_users', JSON.stringify(users)); }
+
+      renderProfileHeader();
+      renderSavedSearches();
+      showToast(getLang() === 'vi' ? 'Đã xóa tìm kiếm' : 'Search deleted', 'success');
+    }
+
+    function renderBookings() {
+      user = getUser();
+      const list = document.getElementById('bookingsList');
+      const bookings = user ? (user.bookings || []) : [];
+      const lang = getLang();
+
+      if (bookings.length === 0) {
+        list.innerHTML = `
+          <div class="no-results" style="display:block;background:var(--color-bg-card);border-radius:var(--radius-lg);padding:var(--space-3xl);">
+            <div class="no-results-icon">📦</div>
+            <h3>${lang === 'vi' ? 'Bạn chưa có đơn đặt gói nào' : 'No bookings yet'}</h3>
+            <p style="margin-top:8px;color:var(--color-text-muted);">${lang === 'vi' ? 'Tìm gói sự kiện ưng ý và hoàn tất đặt chỗ để chuẩn bị cho khoảnh khắc đáng nhớ!' : 'Find your perfect package and book to get ready for your big moment!'}</p>
+            <a href="explore.html" class="btn btn-primary" style="margin-top:var(--space-lg);display:inline-block;text-decoration:none;">
+              ✨ ${lang === 'vi' ? 'Tìm gói sự kiện' : 'Find Packages'}
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = bookings.map(b => {
+        const pkgTitle = lang === 'vi' ? (b.packageNameVi || b.packageName) : b.packageName;
+        return `
+          <div class="booking-history-card">
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span class="status-badge">✓ ${lang === 'vi' ? 'Đã xác nhận' : 'Confirmed'}</span>
+                <span style="font-family:monospace;font-weight:700;color:var(--color-primary);">${b.id}</span>
+              </div>
+              <h3 style="font-size:var(--text-lg);margin-bottom:6px;">${pkgTitle}</h3>
+              <div style="font-size:var(--text-sm);color:var(--color-text-muted);display:flex;flex-wrap:wrap;gap:14px;">
+                <span>📅 ${lang === 'vi' ? 'Ngày tổ chức:' : 'Date:'} <strong>${b.date || 'TBA'}</strong></span>
+                <span>👥 ${lang === 'vi' ? 'Số khách:' : 'Guests:'} <strong>${b.guests || 2}</strong></span>
+                <span>💳 ${lang === 'vi' ? 'Thanh toán:' : 'Payment:'} <strong>${(b.paymentMethod || 'card').toUpperCase()}</strong></span>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:var(--text-xl);font-weight:700;color:var(--color-primary);font-family:var(--font-heading);margin-bottom:8px;">
+                ${formatPrice(b.total)}
+              </div>
+              <a href="package-detail.html?id=${b.packageId}" class="btn btn-sm btn-secondary" style="text-decoration:none;">
+                ${lang === 'vi' ? 'Xem chi tiết gói' : 'View Package'}
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderProfileHeader();
+    renderSavedSearches();
+    renderBookings();
+
+    function onLangChange() {
+      setLang(getLang());
+      renderProfileHeader();
+      renderSavedSearches();
+      renderBookings();
+    }
+    window.addEventListener('langchange', () => onLangChange());
+  </script>
+</body>
+</html>

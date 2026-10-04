@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Khám phá các gói dịch vụ sự kiện trọn gói tại Hà Nội: Cầu hôn lãng mạn, Sinh nhật cổ tích, Prom hoàng gia, Teambuilding ven hồ theo phong cách và phường/quận bạn mong muốn.">
+  <title>Khám Phá Gói Sự Kiện & Địa Điểm Hà Nội – Momently</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <style>
+    .explore-hero {
+      padding-top: calc(var(--nav-height) + var(--space-2xl));
+      padding-bottom: var(--space-2xl);
+      text-align: center;
+      background: radial-gradient(circle at 50% 20%, rgba(2, 132, 199, 0.12) 0%, rgba(236, 72, 153, 0.1) 45%, rgba(248, 250, 252, 1) 85%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Top Search Bar */
+    .top-search-section {
+      max-width: 900px;
+      margin: var(--space-lg) auto 0;
+      padding: 0 var(--space-md);
+      position: relative;
+      z-index: 5;
+    }
+    .top-search-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-md);
+      box-shadow: 0 16px 36px -10px rgba(2, 132, 199, 0.16), 0 8px 20px -6px rgba(236, 72, 153, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .top-search-input-box {
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 10px 18px;
+      transition: all var(--transition-fast);
+    }
+    .top-search-input-box:focus-within {
+      background: #fff;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+    .top-search-input-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: var(--text-sm);
+      font-family: var(--font-body);
+      color: var(--color-text);
+      width: 100%;
+      margin-left: 8px;
+    }
+
+    /* Interactive Budget Slider Box */
+    .budget-slider-box {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.05), rgba(236, 72, 153, 0.05));
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      margin: var(--space-lg) 0;
+      text-align: center;
+    }
+    .budget-slider-display {
+      font-size: 2rem;
+      font-family: var(--font-heading);
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: var(--space-sm);
+    }
+    .budget-range-input {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(to right, #0284c7, #ec4899);
+      outline: none;
+      margin: var(--space-md) 0;
+      cursor: pointer;
+    }
+    .budget-range-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid #ec4899;
+      box-shadow: 0 2px 10px rgba(236, 72, 153, 0.4);
+      cursor: pointer;
+      transition: transform var(--transition-fast);
+    }
+    .budget-range-input::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+    .budget-presets-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: var(--space-md);
+    }
+    .budget-preset-chip {
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      background: #fff;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .budget-preset-chip:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .budget-preset-chip.active {
+      background: var(--gradient-primary);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    /* District and Ward Selectors */
+    .ward-search-box {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 9px 16px;
+      margin: var(--space-md) 0;
+      transition: border-color var(--transition-fast);
+    }
+    .ward-search-box:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+    .ward-pills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 4px;
+      border-radius: var(--radius-md);
+    }
+    .ward-pill {
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      background: #fff;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--color-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .ward-pill:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .ward-pill.selected {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <!-- Hero Section with Top Location Search -->
+  <section class="explore-hero">
+    <div class="container">
+      <div class="fairytale-badge" style="margin-bottom:12px;" data-i18n="explore_hero_badge">
+        ✨ KHOẢNH KHẮC CỔ TÍCH & KỶ NIỆM DIỆU KỲ ✨
+      </div>
+      <h1 class="section-title text-gradient fairytale-title" data-i18n="explore_hero_title">Khám Phá Gói Sự Kiện & Địa Điểm Hà Nội</h1>
+      <p class="section-subtitle" data-i18n="explore_hero_subtitle">
+        Bước vào không gian sự kiện cổ tích nhiệm màu — được chăm chút tỉ mỉ từ địa điểm mơ ước đến phong cách trang trí.
+      </p>
+
+      <!-- Top Search Bar for Instant Location/Venue Search -->
+      <div class="top-search-section">
+        <div class="top-search-wrapper">
+          <div class="top-search-input-box">
+            <span style="font-size:18px;">🔍</span>
+            <input type="text" id="heroVenueSearchInput" 
+                   data-i18n-placeholder="explore_top_search_placeholder"
+                   placeholder="Tìm kiếm địa điểm, rooftop, lounge, biệt thự, quận, huyện..."
+                   onkeyup="if(event.key === 'Enter') triggerHeroSearch()">
+            <button type="button" class="btn btn-sm btn-pink-blue" onclick="triggerHeroSearch()" style="padding:7px 18px;border-radius:var(--radius-full);font-weight:700;white-space:nowrap;" data-i18n="explore_top_search_btn">
+              ✨ Tìm kiếm gói ngay
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wizard Section -->
+  <section class="section">
+    <div class="container">
+      <div class="wizard" id="wizard">
+        <div class="wizard-progress" id="wizardProgress"></div>
+
+        <!-- Step 1: Event Type -->
+        <div class="wizard-step active" data-step="1">
+          <h3 data-i18n="explore_step1_heading">Bạn đang lên kế hoạch cho sự kiện gì?</h3>
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="explore_step1_sub">
+            Chọn loại sự kiện để nhận ngay gợi ý concept và địa điểm tương ứng
+          </p>
+          <div class="wizard-options" id="eventOptions" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));"></div>
+        </div>
+
+        <!-- Step 2: Location (Hanoi Post-Merger Wards Only) -->
+        <div class="wizard-step" data-step="2">
+          <h3 data-i18n="explore_step2_heading">Khu vực tổ chức tại Thủ đô Hà Nội</h3>
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="explore_step2_sub">
+            Khám phá các phường và địa điểm đẹp nhất Hà Nội (hỗ trợ toàn bộ phường sau sáp nhập)
+          </p>
+
+          <!-- Post-Merger Ward Quick Filter -->
+          <div id="wardContainer" style="background:rgba(255,255,255,0.94);backdrop-filter:blur(14px);padding:var(--space-lg);border-radius:var(--radius-xl);border:1.5px solid rgba(82,183,136,0.3);box-shadow:var(--shadow-sm);margin-top:var(--space-md);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <div style="font-size:var(--text-xs);font-weight:700;color:var(--color-secondary);text-transform:uppercase;" data-i18n="explore_step2_search_label">
+                Tìm kiếm phường, quận nhanh:
+              </div>
+              <div id="wardSearchCount" style="font-size:11px;color:var(--color-primary);font-weight:600;"></div>
+            </div>
+
+            <div class="ward-search-box">
+              <span style="font-size:1.1rem;user-select:none;">🪄</span>
+              <input type="text" id="wardSearchInput" class="district-search-input" 
+                     data-i18n-placeholder="explore_step2_search_placeholder"
+                     placeholder="Nhập tên phường hoặc quận (ví dụ: Điện Biên, Hàng Trống, Mễ Trì, Tây Hồ, Cầu Giấy...)"
+                     oninput="filterWardsInStep(this.value)">
+              <button type="button" class="fairytale-search-clear" onclick="clearWardSearch()" title="Xóa">×</button>
+            </div>
+
+            <div class="ward-pills-container" id="wardOptionsList"></div>
+          </div>
+
+          <div class="wizard-buttons">
+            <button class="btn btn-secondary" onclick="prevStep()" data-i18n="explore_btn_prev">← Quay lại</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Interactive Budget Slider -->
+        <div class="wizard-step" data-step="3">
+          <h3 data-i18n="explore_step3_heading">Ngân sách dự kiến của bạn</h3>
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="explore_step3_sub">
+            Kéo thanh trượt để tự do điều chỉnh khoảng chi phí mong muốn
+          </p>
+
+          <div class="budget-slider-box">
+            <div style="font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;" data-i18n="explore_step3_badge">
+              ✨ Khoảng Ngân Sách Tối Đa Tự Điều Chỉnh ✨
+            </div>
+            <div class="budget-slider-display" id="budgetSliderDisplay">20.000.000₫</div>
+            <div id="budgetSliderWordDisplay" style="font-size:13px;color:var(--color-text-muted);font-weight:600;margin-bottom:12px;">
+              (Khoảng 20.000.000 VNĐ)
+            </div>
+
+            <input type="range" class="budget-range-input" id="budgetRangeInput" min="1000000" max="60000000" step="500000" value="20000000" oninput="onBudgetRangeInput(this.value)">
+            
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--color-secondary);margin-top:2px;">
+              <span>1.000.000₫</span>
+              <span style="color:var(--color-primary);">30.000.000₫</span>
+              <span>60.000.000₫+</span>
+            </div>
+
+            <!-- Direct Numeric Input Box -->
+            <div style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;padding:10px 16px;border-radius:var(--radius-lg);border:1px solid var(--color-border);max-width:380px;margin-left:auto;margin-right:auto;">
+              <span style="font-size:13px;font-weight:600;color:var(--color-secondary);" data-i18n="explore_step3_exact_label">Nhập số tiền chính xác:</span>
+              <input type="number" id="budgetDirectInput" min="500000" max="100000000" step="500000" value="20000000" 
+                     style="width:140px;padding:6px 10px;border:1.5px solid var(--color-primary);border-radius:var(--radius-md);font-weight:700;font-size:14px;color:var(--color-primary);text-align:right;" 
+                     oninput="onBudgetDirectInput(this.value)">
+              <span style="font-weight:700;color:var(--color-primary);font-size:14px;">₫</span>
+            </div>
+
+            <div class="budget-presets-row" style="margin-top:16px;">
+              <button type="button" class="budget-preset-chip" onclick="setBudgetPreset('all')" data-i18n="budget_preset_all">Tất cả ngân sách</button>
+              <button type="button" class="budget-preset-chip" onclick="setBudgetPreset(5000000)" data-i18n="budget_preset_5m">Dưới 5 triệu (5.000.000₫)</button>
+              <button type="button" class="budget-preset-chip" onclick="setBudgetPreset(10000000)" data-i18n="budget_preset_10m">Dưới 10 triệu (10.000.000₫)</button>
+              <button type="button" class="budget-preset-chip active" onclick="setBudgetPreset(20000000)" data-i18n="budget_preset_20m">Dưới 20 triệu (20.000.000₫)</button>
+              <button type="button" class="budget-preset-chip" onclick="setBudgetPreset(35000000)" data-i18n="budget_preset_35m">Dưới 35 triệu (35.000.000₫)</button>
+              <button type="button" class="budget-preset-chip" onclick="setBudgetPreset(60000000)" data-i18n="budget_preset_60m">Cao cấp (60.000.000₫+)</button>
+            </div>
+          </div>
+
+          <div class="wizard-buttons">
+            <button class="btn btn-secondary" onclick="prevStep()" data-i18n="explore_btn_prev">← Quay lại</button>
+            <button class="btn btn-primary" onclick="nextStep()" data-i18n="explore_btn_next">Tiếp theo →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Diverse Styles -->
+        <div class="wizard-step" data-step="4">
+          <h3 data-i18n="explore_step4_heading">Bạn thích phong cách nào?</h3>
+          <p style="font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="explore_step4_sub">
+            Chọn phong cách sự kiện — tự động chuyển sang bước chọn ngày tổ chức
+          </p>
+          <div class="wizard-options" id="styleOptions"></div>
+          <div class="wizard-buttons">
+            <button class="btn btn-secondary" onclick="prevStep()" data-i18n="explore_btn_prev">← Quay lại</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Date -->
+        <div class="wizard-step" data-step="5">
+          <h3 data-i18n="explore_step5_heading">Ngày dự kiến tổ chức?</h3>
+          <div class="wizard-date-input">
+            <input type="date" id="eventDate" min="">
+          </div>
+          <div class="wizard-buttons">
+            <button class="btn btn-secondary" onclick="prevStep()" data-i18n="explore_btn_prev">← Quay lại</button>
+            <button class="btn btn-primary btn-lg" onclick="findPackages()" data-i18n="explore_btn_discover">✨ Khám Phá Gói Phù Hợp</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results Section -->
+  <section class="results-section" id="resultsSection" style="display:none;">
+    <div class="container">
+      <div class="results-header" style="flex-direction:column;align-items:stretch;gap:var(--space-md);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div class="fairytale-badge" style="margin-bottom:6px;" data-i18n="explore_results_badge">✨ GỢI Ý DÀNH RIÊNG CHO BẠN ✨</div>
+            <h2 class="section-title fairytale-title" data-i18n="explore_results_title">Gói Sự Kiện Đề Xuất Tại Hà Nội</h2>
+            <p class="section-subtitle" style="margin-bottom:0;" id="resultsCountLabel" data-i18n="explore_results_sub">Dựa trên phong cách và khoảng giá của bạn</p>
+          </div>
+          <button class="btn btn-sm btn-secondary" onclick="resetWizard()" data-i18n="explore_btn_reset">🔄 Chọn lại từ đầu</button>
+        </div>
+
+        <!-- Comprehensive Results Filter Bar -->
+        <div class="filter-bar-row">
+          <div style="width:100%;margin-bottom:4px;">
+            <div class="fairytale-search-box" style="padding:4px 12px 4px 16px;">
+              <span style="font-size:1.1rem;margin-right:6px;">✨</span>
+              <input type="text" id="resVenueSearchInput" class="fairytale-search-input" 
+                     data-i18n-placeholder="explore_search_package_placeholder"
+                     placeholder="Tìm kiếm nhanh tên gói, địa điểm, rooftop, lounge, biệt thự..."
+                     oninput="onResVenueSearch(this.value)">
+              <button type="button" class="fairytale-search-clear" onclick="clearResVenueSearch()" title="Xóa">×</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="explore_lbl_ward">🏘️ Phường:</label>
+            <select id="resFilterWard" onchange="onResWardChange()">
+              <option value="all" data-i18n="explore_all_wards">Tất cả các phường</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="explore_lbl_event">🎉 Sự kiện:</label>
+            <select id="resFilterEvent" onchange="onResEventChange()">
+              <option value="all" data-i18n="explore_all_events">Tất cả sự kiện</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label data-i18n="explore_lbl_budget">💰 Ngân sách tối đa:</label>
+            <select id="resFilterBudget" onchange="onResBudgetChange()">
+              <option value="all" data-i18n="explore_all_budgets">Mọi mức giá</option>
+              <option value="5000000" data-i18n="explore_budget_u5">Dưới 5 triệu</option>
+              <option value="10000000" data-i18n="explore_budget_u10">Dưới 10 triệu</option>
+              <option value="20000000" data-i18n="explore_budget_u20">Dưới 20 triệu</option>
+              <option value="35000000" data-i18n="explore_budget_u35">Dưới 35 triệu</option>
+              <option value="60000000" data-i18n="explore_budget_u60">Dưới 60 triệu</option>
+            </select>
+          </div>
+
+          <div class="filter-group" style="margin-left:auto;">
+            <label data-i18n="explore_lbl_sort">Sắp xếp theo:</label>
+            <select id="sortSelect" onchange="applySortAndRender()">
+              <option value="recommended" data-i18n="explore_sort_recommended">Đề xuất hàng đầu</option>
+              <option value="price_low" data-i18n="explore_sort_price_low">Giá: Thấp đến Cao</option>
+              <option value="price_high" data-i18n="explore_sort_price_high">Giá: Cao đến Thấp</option>
+              <option value="rating" data-i18n="explore_sort_rating">Đánh giá cao nhất</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="packages-grid" id="resultsGrid" style="margin-top:var(--space-xl);"></div>
+      
+      <div class="no-results" id="noResults" style="display:none;">
+        <div class="no-results-icon">🔍</div>
+        <p data-i18n="explore_no_results">Không tìm thấy gói sự kiện nào khớp hoàn toàn. Hãy thử tăng khoảng giá hoặc đổi quận/phường.</p>
+        <button class="btn btn-primary" style="margin-top:var(--space-lg);" onclick="resetWizard()" data-i18n="explore_btn_reset">🔄 Chọn lại từ đầu</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('explore');
+
+    let currentStep = 1;
+    const totalSteps = 5;
+    let wardSearchQuery = '';
+
+    let selections = { 
+      event: null, 
+      city: 'hn', 
+      district: 'all', 
+      ward: 'all',
+      maxPrice: 20000000,
+      style: null, 
+      date: null,
+      query: ''
+    };
+    let filteredResults = [];
+
+    // Pre-selection params from URL
+    const preEvent = getUrlParam('event');
+    const preWard = getUrlParam('ward');
+    const preDistrict = getUrlParam('district');
+    const preQuery = getUrlParam('q');
+
+    if (preEvent) selections.event = preEvent;
+    if (preWard) selections.ward = preWard;
+    if (preDistrict) selections.ward = preDistrict;
+    if (preQuery) selections.query = preQuery;
+
+
+    // Set min date to today
+    document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
+
+    function renderWizardProgress() {
+      const container = document.getElementById('wizardProgress');
+      container.innerHTML = Array.from({ length: totalSteps }, (_, i) => {
+        const step = i + 1;
+        let cls = 'wizard-dot';
+        if (step === currentStep) cls += ' active';
+        else if (step < currentStep) cls += ' completed';
+        return `<div class="${cls}"></div>`;
+      }).join('');
+    }
+
+    function renderEventOptions() {
+      const lang = getLang();
+      const container = document.getElementById('eventOptions');
+      if (!container) return;
+      container.innerHTML = eventTypes.map(ev => {
+        const evName = (lang === 'vi' ? ev.name_vi : ev.name_en) || t('event_' + ev.id) || ev.id;
+        return `
+        <div class="wizard-option ${selections.event === ev.id ? 'selected' : ''}" 
+             onclick="selectOption('event', '${ev.id}', this)">
+          <span class="option-icon">${ev.icon}</span>
+          <span class="option-label">${evName}</span>
+        </div>
+      `;
+      }).join('');
+    }
+
+    // Step 2: Post-Merger Wards (Direct ward list without district step)
+    function filterWardsInStep(val) {
+      wardSearchQuery = val.toLowerCase().trim();
+      renderWardOptions();
+    }
+
+    function clearWardSearch() {
+      const inp = document.getElementById('wardSearchInput');
+      if (inp) inp.value = '';
+      wardSearchQuery = '';
+      renderWardOptions();
+    }
+
+    function renderWardOptions() {
+      const wardListEl = document.getElementById('wardOptionsList');
+      const countEl = document.getElementById('wardSearchCount');
+      if (!wardListEl) return;
+
+      let allWards = typeof getAllHanoiWardsFlat === 'function' ? getAllHanoiWardsFlat() : [];
+      const lang = getLang();
+
+      if (wardSearchQuery) {
+        const qRaw = wardSearchQuery.toLowerCase().trim();
+        const qNoTone = typeof removeVietnameseTones === 'function' ? removeVietnameseTones(qRaw) : qRaw;
+        allWards = allWards.filter(w => {
+          const vi = `${w.name_vi || ''} ${w.districtName_vi || ''}`.toLowerCase();
+          const en = `${w.name_en || ''} ${w.districtName_en || ''}`.toLowerCase();
+          const noTone = typeof removeVietnameseTones === 'function' ? removeVietnameseTones(`${vi} ${en}`) : `${vi} ${en}`;
+          return vi.includes(qRaw) || en.includes(qRaw) || noTone.includes(qNoTone);
+        });
+      }
+
+      if (countEl) {
+        countEl.textContent = lang === 'vi' ? `✨ Có ${allWards.length} phường sau sáp nhập` : `✨ ${allWards.length} post-merger wards available`;
+      }
+
+      wardListEl.innerHTML = `
+        <button type="button" class="ward-pill ${selections.ward === 'all' ? 'selected' : ''}" onclick="selectWard('all')">
+          🏘️ ${lang === 'vi' ? 'Tất cả các phường' : 'All Wards in Hanoi'}
+        </button>
+      ` + allWards.map(w => {
+        const wName = (lang === 'vi' ? w.name_vi : w.name_en) || w.name_vi;
+        return `
+        <button type="button" class="ward-pill ${selections.ward === w.name_vi ? 'selected' : ''}" onclick="selectWard('${w.name_vi}')">
+          ${wName}
+        </button>
+        `;
+      }).join('');
+    }
+
+    function selectWard(wardName) {
+      selections.ward = wardName;
+      renderWardOptions();
+      // Auto-advance to Step 3 (Budget)
+      setTimeout(() => {
+        nextStep();
+      }, 220);
+    }
+
+    // Step 3: Interactive Budget Slider with Continuous Live Number Display
+    function updateBudgetDisplay(val, isAll = false) {
+      const lang = getLang();
+      if (isAll) {
+        selections.maxPrice = 999999999;
+        const disp = document.getElementById('budgetSliderDisplay');
+        if (disp) disp.textContent = lang === 'vi' ? 'Mọi mức giá (Không giới hạn)' : 'All Budgets (Unlimited)';
+        const wordDisp = document.getElementById('budgetSliderWordDisplay');
+        if (wordDisp) wordDisp.textContent = lang === 'vi' ? '(Không giới hạn khoảng giá)' : '(No price restriction)';
+        const rInp = document.getElementById('budgetRangeInput');
+        if (rInp) rInp.value = 60000000;
+        const dInp = document.getElementById('budgetDirectInput');
+        if (dInp) dInp.value = 60000000;
+        return;
+      }
+
+      let num = parseInt(val, 10);
+      if (isNaN(num) || num < 0) num = 0;
+      selections.maxPrice = num;
+
+      const disp = document.getElementById('budgetSliderDisplay');
+      if (disp) disp.textContent = formatPrice(num);
+
+      const wordDisp = document.getElementById('budgetSliderWordDisplay');
+      if (wordDisp) wordDisp.textContent = lang === 'vi' ? `(Khoảng ${num.toLocaleString('vi-VN')} VNĐ)` : `(Approx. ${num.toLocaleString('en-US')} VND)`;
+
+      const rInp = document.getElementById('budgetRangeInput');
+      if (rInp && parseInt(rInp.value, 10) !== num) {
+        rInp.value = Math.min(60000000, Math.max(1000000, num));
+      }
+
+      const dInp = document.getElementById('budgetDirectInput');
+      if (dInp && parseInt(dInp.value, 10) !== num) {
+        dInp.value = num;
+      }
+    }
+
+    function onBudgetRangeInput(val) {
+      updateBudgetDisplay(val, false);
+      document.querySelectorAll('.budget-preset-chip').forEach(c => c.classList.remove('active'));
+    }
+
+    function onBudgetDirectInput(val) {
+      updateBudgetDisplay(val, false);
+      document.querySelectorAll('.budget-preset-chip').forEach(c => c.classList.remove('active'));
+    }
+
+    function setBudgetPreset(presetVal, el) {
+      document.querySelectorAll('.budget-preset-chip').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+      else if (window.event && window.event.target) window.event.target.classList.add('active');
+
+      if (presetVal === 'all') {
+        updateBudgetDisplay(0, true);
+      } else {
+        updateBudgetDisplay(presetVal, false);
+      }
+    }
+
+    // Step 4: Diverse Styles
+    function renderStyleOptions() {
+      const lang = getLang();
+      const styles = [
+        { id: 'fairytale', icon: '🏰', name_vi: 'Cổ Tích Diệu Kỳ (Fairytale)', name_en: 'Magical Fairytale & Castle', desc_vi: 'Lung linh, xe ngựa, hoa hồng & ánh sao', desc_en: 'Sparkling lights, roses, carriage & starlight' },
+        { id: 'romantic', icon: '🌹', name_vi: 'Lãng Mạn Tinh Tế (Romantic)', name_en: 'Romantic & Floral Ambience', desc_vi: 'Ánh nến, hoa tươi pastel, nhạc acoustic', desc_en: 'Candlelight, fresh pastel florals, acoustic music' },
+        { id: 'luxury', icon: '✨', name_vi: 'Sang Trọng 5 Sao (Luxury)', name_en: '5-Star Luxury & Fine Dining', desc_vi: 'Đại sảnh khách sạn quốc tế, private dining', desc_en: 'Grand hotel ballroom, private dining lounge' },
+        { id: 'vintage', icon: '📜', name_vi: 'Hoài Niệm Phố Cổ (Vintage)', name_en: 'Heritage Vintage & Old Hanoi', desc_vi: 'Biệt thự Pháp cổ, nét thanh lịch Tràng An', desc_en: 'French colonial villa, elegant Hanoi heritage' },
+        { id: 'rooftop', icon: '🌆', name_vi: 'Skyline Rooftop (Tầng Cao)', name_en: 'Skyline Rooftop & Sunset', desc_vi: 'Ngắm hoàng hôn Hồ Tây & thành phố về đêm', desc_en: 'Panoramic West Lake sunset & city lights' },
+        { id: 'french_villa', icon: '🏛️', name_vi: 'Biệt Thự Pháp (French Villa)', name_en: 'French Colonial Villa Garden', desc_vi: 'Kiến trúc Indochine & Tây phương cổ kính', desc_en: 'Indochine & classic Western architecture' },
+        { id: 'bohemian', icon: '🌿', name_vi: 'Bohemian & Camping (Thiên Nhiên)', name_en: 'Boho Chic & Glamping Campfire', desc_vi: 'Lều trại ngoài trời, bãi cỏ xanh mát ven hồ', desc_en: 'Outdoor teepee tents, lakeside green lawn' },
+        { id: 'workshop', icon: '🎨', name_vi: 'Nghệ Thuật & Workshop (Creative)', name_en: 'Creative Art & Craft Workshop', desc_vi: 'Tổ hợp sáng tạo, gốm thủ công & triển lãm', desc_en: 'Creative hub, handmade pottery & gallery' },
+        { id: 'minimalist', icon: '◽', name_vi: 'Hiện Đại Tối Giản (Minimalist)', name_en: 'Modern Minimalist Aesthetic', desc_vi: 'Tinh tế, tone màu trang nhã chuẩn Hàn Quốc', desc_en: 'Refined, elegant Korean clean aesthetic' }
+      ];
+
+      document.getElementById('styleOptions').innerHTML = styles.map(s => {
+        const sName = lang === 'vi' ? s.name_vi : s.name_en;
+        const sDesc = lang === 'vi' ? s.desc_vi : s.desc_en;
+        return `
+        <div class="wizard-option ${selections.style === s.id ? 'selected' : ''}" 
+             onclick="selectOption('style', '${s.id}', this)">
+          <span class="option-icon">${s.icon}</span>
+          <span class="option-label" style="font-weight:700;">${sName}</span>
+          <span style="font-size:11px;color:var(--color-text-muted);margin-top:2px;">${sDesc}</span>
+        </div>
+      `;
+      }).join('');
+    }
+
+    function selectOption(type, value, el) {
+      selections[type] = value;
+      el.parentElement.querySelectorAll('.wizard-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+
+      // Auto-advance to next step when user clicks package/event or style
+      if (type === 'event' || type === 'style') {
+        setTimeout(() => {
+          nextStep();
+        }, 220);
+      }
+    }
+
+    function showStep(step) {
+      document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+      document.querySelector(`.wizard-step[data-step="${step}"]`).classList.add('active');
+      currentStep = step;
+      renderWizardProgress();
+    }
+
+    function nextStep() {
+      if (currentStep < totalSteps) {
+        showStep(currentStep + 1);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        showStep(currentStep - 1);
+      }
+    }
+
+    // Top Search Trigger
+    function triggerHeroSearch() {
+      const inp = document.getElementById('heroVenueSearchInput');
+      const val = inp ? inp.value.trim() : '';
+      selections.query = val;
+      const resInp = document.getElementById('resVenueSearchInput');
+      if (resInp) resInp.value = val;
+      findPackages();
+    }
+
+    function onResVenueSearch(val) {
+      selections.query = val;
+      runFiltering();
+    }
+
+    function clearResVenueSearch() {
+      const inp = document.getElementById('resVenueSearchInput');
+      if (inp) inp.value = '';
+      onResVenueSearch('');
+    }
+
+    function populateResultsFilters() {
+      const lang = getLang();
+
+      // Wards dropdown (Direct post-merger wards list)
+      syncResWardDropdown();
+
+      // Events
+      const eventSelect = document.getElementById('resFilterEvent');
+      if (eventSelect) {
+        eventSelect.innerHTML = `<option value="all">🎉 ${lang === 'vi' ? 'Tất cả sự kiện' : 'All Events'}</option>` +
+          eventTypes.map(ev => {
+            const evName = (lang === 'vi' ? ev.name_vi : ev.name_en) || t('event_' + ev.id);
+            return `<option value="${ev.id}" ${selections.event === ev.id ? 'selected' : ''}>${ev.icon} ${evName}</option>`;
+          }).join('');
+      }
+
+      // Budget
+      const budgetSelect = document.getElementById('resFilterBudget');
+      if (budgetSelect) {
+        if (selections.maxPrice && selections.maxPrice < 999999999) {
+          budgetSelect.value = String(selections.maxPrice);
+        } else {
+          budgetSelect.value = 'all';
+        }
+      }
+
+      // Query
+      const resInp = document.getElementById('resVenueSearchInput');
+      if (resInp && selections.query) resInp.value = selections.query;
+    }
+
+    function syncResWardDropdown() {
+      const lang = getLang();
+      const wardSelect = document.getElementById('resFilterWard');
+      if (!wardSelect) return;
+      const wardList = typeof getAllHanoiWardsFlat === 'function' ? getAllHanoiWardsFlat() : [];
+
+      wardSelect.innerHTML = `<option value="all">🏘️ ${lang === 'vi' ? 'Tất cả các phường (sau sáp nhập)' : 'All Wards (Post-merger)'}</option>` +
+        wardList.map(w => {
+          const wName = (lang === 'vi' ? w.name_vi : w.name_en) || w.name_vi;
+          return `<option value="${w.name_vi}" ${selections.ward === w.name_vi ? 'selected' : ''}>${wName}</option>`;
+        }).join('');
+    }
+
+    function onResWardChange() {
+      selections.ward = document.getElementById('resFilterWard').value;
+      runFiltering();
+    }
+
+    function onResEventChange() {
+      selections.event = document.getElementById('resFilterEvent').value;
+      runFiltering();
+    }
+
+    function onResBudgetChange() {
+      const bVal = document.getElementById('resFilterBudget').value;
+      selections.maxPrice = bVal === 'all' ? 999999999 : parseInt(bVal, 10);
+      runFiltering();
+    }
+
+
+    function runFiltering() {
+      filteredResults = filterPackages({
+        event: selections.event,
+        district: selections.district,
+        ward: selections.ward,
+        maxPrice: selections.maxPrice,
+        style: selections.style,
+        query: selections.query
+      });
+      applySortAndRender();
+    }
+
+    function findPackages() {
+      selections.date = document.getElementById('eventDate').value;
+      saveSearch(selections);
+
+      document.getElementById('wizard').style.display = 'none';
+      document.getElementById('resultsSection').style.display = 'block';
+
+      populateResultsFilters();
+      runFiltering();
+
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function applySortAndRender() {
+      const lang = getLang();
+      const sortBy = document.getElementById('sortSelect').value;
+      const sorted = sortPackages(filteredResults, sortBy);
+      const grid = document.getElementById('resultsGrid');
+      const noResults = document.getElementById('noResults');
+      const countLabel = document.getElementById('resultsCountLabel');
+
+      if (countLabel) {
+        countLabel.textContent = lang === 'vi' 
+          ? `Tìm thấy ${sorted.length} gói sự kiện tiêu chuẩn tại Hà Nội` 
+          : `Found ${sorted.length} curated event packages in Hanoi`;
+      }
+
+      if (sorted.length === 0) {
+        grid.style.display = 'none';
+        noResults.style.display = 'block';
+      } else {
+        grid.style.display = 'grid';
+        noResults.style.display = 'none';
+        grid.innerHTML = sorted.map(pkg => renderPackageCard(pkg)).join('');
+      }
+    }
+
+    function resetWizard() {
+      selections = { event: null, city: 'hn', district: 'all', ward: 'all', maxPrice: 20000000, style: null, date: null, query: '' };
+      wardSearchQuery = '';
+      filteredResults = [];
+      const hInp = document.getElementById('heroVenueSearchInput');
+      if (hInp) hInp.value = '';
+      const rInp = document.getElementById('resVenueSearchInput');
+      if (rInp) rInp.value = '';
+      document.getElementById('wizard').style.display = 'block';
+      document.getElementById('resultsSection').style.display = 'none';
+      showStep(1);
+      renderAll();
+    }
+
+    function renderAll() {
+      renderWizardProgress();
+      renderEventOptions();
+      renderWardOptions();
+      renderStyleOptions();
+    }
+
+    renderAll();
+
+    function onLangChange() {
+      setLang(getLang());
+      renderAll();
+      if (document.getElementById('resultsSection') && document.getElementById('resultsSection').style.display !== 'none') {
+        populateResultsFilters();
+        applySortAndRender();
+      }
+    }
+    window.addEventListener('langchange', () => onLangChange());
+
+    if (preEvent && (preDistrict || preQuery)) {
+      findPackages();
+    } else if (preEvent) {
+      showStep(2);
+    }
+  </script>
+</body>
+</html>

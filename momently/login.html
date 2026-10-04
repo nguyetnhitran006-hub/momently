@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in or create an account on Momently to save your event searches and track bookings.">
+  <title>Sign In / Register – Momently</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <!-- Official Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, rgba(200, 149, 108, 0.05) 0%, rgba(232, 180, 184, 0.08) 100%);
+    }
+    .auth-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--nav-height) + var(--space-2xl)) var(--space-md) var(--space-3xl);
+    }
+    .auth-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      max-width: 480px;
+      padding: var(--space-3xl);
+      position: relative;
+    }
+    .auth-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--color-border-light);
+      margin-bottom: var(--space-xl);
+    }
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: var(--space-md);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      position: relative;
+      background: none;
+      border: none;
+      font-size: var(--text-base);
+    }
+    .auth-tab.active {
+      color: var(--color-primary);
+    }
+    .auth-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-primary);
+    }
+    .info-note {
+      background: #faf6f0;
+      border-left: 3px solid var(--color-primary);
+      padding: var(--space-md);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      color: var(--color-text);
+      line-height: 1.5;
+      margin-bottom: var(--space-xl);
+    }
+    .quick-demo-btn {
+      width: 100%;
+      background: #f4efe9;
+      border: 1px dashed var(--color-primary);
+      color: var(--color-primary);
+      padding: 10px;
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: var(--space-md);
+      transition: all 0.2s;
+    }
+    .quick-demo-btn:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Google v3 Dark Theme Modal (Exact match to Google Account Chooser in media_1791085055007.png) */
+    .google-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(5px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    .google-modal-container {
+      background: #131314;
+      border: 1px solid #444746;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 720px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      animation: googleModalIn 0.25s cubic-bezier(0.1, 0.9, 0.2, 1);
+    }
+    @keyframes googleModalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .google-browser-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: #1e1f20;
+      border-bottom: 1px solid #333538;
+    }
+    .google-address-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #131314;
+      border: 1px solid #444746;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 11.5px;
+      font-family: monospace;
+      letter-spacing: 0.2px;
+    }
+    .google-close-btn {
+      background: none;
+      border: none;
+      color: #c4c7c5;
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+      transition: color 0.15s;
+    }
+    .google-close-btn:hover { color: #fff; }
+    .google-card-inner {
+      padding: 28px 36px 20px;
+      position: relative;
+    }
+    .google-loading-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      overflow: hidden;
+    }
+    .google-loading-bar.active {
+      background: #041e49;
+    }
+    .google-loading-bar.active::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 40%;
+      background: #a8c7fa;
+      animation: googleLoadingAnim 0.7s infinite linear;
+    }
+    @keyframes googleLoadingAnim {
+      0% { left: -40%; width: 30%; }
+      50% { left: 40%; width: 50%; }
+      100% { left: 100%; width: 30%; }
+    }
+    .google-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .google-body-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 32px;
+    }
+    @media (max-width: 640px) {
+      .google-body-grid { grid-template-columns: 1fr; gap: 16px; }
+      .google-card-inner { padding: 20px; }
+    }
+    .google-app-badge {
+      width: 44px; height: 44px;
+      background: #282a2d;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 1px solid #444746;
+    }
+    .google-title {
+      font-size: 26px;
+      font-weight: 400;
+      color: #e3e3e3;
+      margin: 14px 0 6px;
+      line-height: 1.25;
+    }
+    .google-subtitle {
+      font-size: 13.5px;
+      color: #c4c7c5;
+      margin: 0;
+    }
+    .google-accounts-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .google-account-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 12px;
+      border-bottom: 1px solid #282a2d;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.15s;
+    }
+    .google-account-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .google-avatar-circle {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .google-account-details {
+      flex: 1;
+      min-width: 0;
+    }
+    .google-account-name {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #e3e3e3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .google-account-email {
+      font-size: 12px;
+      color: #c4c7c5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+    .google-custom-input {
+      width: 100%;
+      background: #131314;
+      border: 1px solid #444746;
+      color: #e3e3e3;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      margin-bottom: 8px;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .google-custom-input:focus {
+      border-color: #a8c7fa;
+    }
+    .google-custom-btn-cancel {
+      background: none;
+      border: none;
+      color: #a8c7fa;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .google-custom-btn-submit {
+      background: #a8c7fa;
+      border: none;
+      color: #041e49;
+      padding: 7px 18px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 18px;
+    }
+    .google-disclaimer {
+      font-size: 11.5px;
+      color: #8e918f;
+      line-height: 1.5;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #282a2d;
+    }
+    .google-disclaimer a { color: #a8c7fa; text-decoration: none; }
+    .google-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 36px 18px;
+      border-top: 1px solid #282a2d;
+      background: #131314;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <div class="auth-page">
+    <div class="auth-container">
+      <div class="auth-card">
+        <!-- Logo / Title -->
+        <div style="text-align:center;margin-bottom:var(--space-xl);">
+          <span style="font-size:2rem;">✨</span>
+          <h1 id="authTitle" style="font-size:var(--text-2xl);margin-top:var(--space-xs);margin-bottom:var(--space-xs);">Welcome to Momently</h1>
+          <p id="authSubtitle" style="color:var(--color-text-muted);font-size:var(--text-sm);">Make your once-in-a-lifetime moment happen</p>
+        </div>
+
+        <!-- Clarification Banner -->
+        <div class="info-note" data-i18n="auth_demo_hint">
+          💡 Gợi ý: Bạn hoàn toàn có thể tự do xem và tùy biến gói dịch vụ mà không bắt buộc đăng nhập. Đăng nhập sẽ giúp tự động lưu lịch sử tìm kiếm & đơn đặt chỗ!
+        </div>
+
+        <!-- Auth Tabs -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabSignIn" onclick="switchAuthTab('signin')" data-i18n="nav_login">Sign In</button>
+          <button class="auth-tab" id="tabSignUp" onclick="switchAuthTab('signup')" data-i18n="nav_register">Sign Up</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <form id="signInForm" onsubmit="handleSignIn(event)">
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth_email">Email Address</label>
+            <input type="email" id="loginEmail" class="form-input" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth_password">Password</label>
+            <input type="password" id="loginPass" class="form-input" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:var(--space-md);" data-i18n="auth_login_btn">
+            Sign In
+          </button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signUpForm" style="display:none;" onsubmit="handleSignUp(event)">
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth_name">Full Name</label>
+            <input type="text" id="regName" class="form-input" placeholder="Nguyễn Văn A" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth_email">Email Address</label>
+            <input type="email" id="regEmail" class="form-input" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth_phone">Phone Number</label>
+            <input type="tel" id="regPhone" class="form-input" placeholder="0901234567" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="auth_password">Password</label>
+            <input type="password" id="regPass" class="form-input" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:var(--space-md);" data-i18n="auth_register_btn">
+            Create Account
+          </button>
+        </form>
+
+        <!-- Social login simulation -->
+        <div style="margin-top:var(--space-xl);text-align:center;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:var(--space-md);">
+            <div style="flex:1;height:1px;background:var(--color-border-light);"></div>
+            <span style="font-size:var(--text-xs);color:var(--color-text-muted);" data-i18n="auth_or">or</span>
+            <div style="flex:1;height:1px;background:var(--color-border-light);"></div>
+          </div>
+
+          <button type="button" class="btn-google" id="btnGoogleSignIn" onclick="handleGoogleLoginClick()">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path fill="#4285F4" d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.49h4.84a4.14 4.14 0 0 1-1.8 2.71v2.26h2.92a8.78 8.78 0 0 0 2.68-6.62z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.83.87-3.04.87-2.34 0-4.32-1.58-5.03-3.71H.96v2.33C2.44 15.98 5.48 18 9 18z"/>
+              <path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A8.99 8.99 0 0 0 0 9c0 1.45.35 2.82.96 4.05l3.01-2.33z"/>
+              <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.59C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.95l3.01 2.33c.71-2.13 2.69-3.7 5.03-3.7z"/>
+            </svg>
+            <span data-i18n="auth_google">Continue with Google</span>
+          </button>
+        </div>
+
+        <!-- Back to explore / guest -->
+        <div style="text-align:center;margin-top:var(--space-xl);font-size:var(--text-sm);">
+          <a href="explore.html" style="color:var(--color-primary);text-decoration:none;" data-i18n="auth_explore_guest">
+            ← Khám phá gói sự kiện không cần đăng nhập
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('home');
+
+    // Check if user already logged in; show option to continue or switch account without force redirect
+    const currentUser = getUser();
+    if (currentUser) {
+      const banner = document.createElement('div');
+      banner.style.cssText = 'background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.4);border-radius:10px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;font-size:13px;';
+      banner.innerHTML = `
+        <div>
+          <span style="color:var(--color-text-muted);">Đang đăng nhập:</span> 
+          <strong style="color:var(--color-primary);">${currentUser.name || currentUser.email}</strong>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <a href="profile.html" class="btn btn-sm btn-outline" style="padding:4px 10px;font-size:12px;">Hồ sơ</a>
+          <button type="button" onclick="logout()" class="btn btn-sm btn-outline" style="padding:4px 10px;font-size:12px;color:#e53e3e;border-color:#e53e3e;">Đổi tài khoản</button>
+        </div>
+      `;
+      const card = document.querySelector('.auth-card');
+      if (card) {
+        card.insertBefore(banner, card.querySelector('.auth-tabs'));
+      }
+    }
+
+    // Check if returning from Google official site
+    if (sessionStorage.getItem('momently_returned_from_google') === '1') {
+      sessionStorage.removeItem('momently_returned_from_google');
+      const googleReturnBanner = document.createElement('div');
+      googleReturnBanner.id = 'googleReturnBanner';
+      googleReturnBanner.style.cssText = 'background:#f0f6ff;border:1.5px solid #4285f4;border-radius:12px;padding:16px;margin-bottom:18px;text-align:left;animation:fadeIn 0.3s ease;';
+      googleReturnBanner.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <svg width="22" height="22" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <span style="font-weight:700;font-size:13.5px;color:#1a73e8;">Đã quay lại từ Google</span>
+        </div>
+        <p style="font-size:12px;color:#3c4043;line-height:1.5;margin-bottom:12px;">
+          Bạn vừa truy cập trang Google chính thức. Bạn đã hoàn tất đăng nhập tài khoản trên Google chưa?
+        </p>
+        <div style="display:flex;gap:8px;">
+          <button type="button" onclick="confirmGoogleLoggedIn()" class="btn btn-primary" style="flex:1;background:#1a73e8;border-color:#1a73e8;font-size:12px;padding:8px 12px;font-weight:600;">
+            ✓ Đã đăng nhập xong → Vào trang chủ
+          </button>
+          <button type="button" onclick="document.getElementById('googleReturnBanner').remove()" class="btn btn-secondary" style="font-size:12px;padding:8px 12px;">
+            Chưa, thử lại
+          </button>
+        </div>
+      `;
+      const card = document.querySelector('.auth-card');
+      if (card) {
+        card.insertBefore(googleReturnBanner, card.querySelector('.auth-tabs'));
+      }
+    }
+
+    function switchAuthTab(tab) {
+      const isSignIn = tab === 'signin';
+      document.getElementById('tabSignIn').classList.toggle('active', isSignIn);
+      document.getElementById('tabSignUp').classList.toggle('active', !isSignIn);
+      document.getElementById('signInForm').style.display = isSignIn ? 'block' : 'none';
+      document.getElementById('signUpForm').style.display = isSignIn ? 'none' : 'block';
+      
+      const lang = getLang();
+      document.getElementById('authTitle').textContent = isSignIn ? t('auth_login_title') : t('auth_register_title');
+      document.getElementById('authSubtitle').textContent = isSignIn ? t('auth_login_subtitle') : t('auth_register_subtitle');
+    }
+
+    function handleSignIn(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      
+      const res = loginUser(email, pass);
+      if (res.success) {
+        showToast(getLang() === 'vi' ? 'Đăng nhập thành công!' : 'Signed in successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 600);
+      } else {
+        showToast(res.error, 'error');
+        // If account does not exist, give hint to sign up
+        if (res.error && res.error.includes('đăng ký')) {
+          setTimeout(() => {
+            const signupBtn = document.getElementById('tabSignUp');
+            if (signupBtn) signupBtn.click();
+            const regEmail = document.getElementById('regEmail');
+            if (regEmail && !regEmail.value) regEmail.value = email;
+          }, 1200);
+        }
+      }
+    }
+
+    function handleSignUp(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const pass = document.getElementById('regPass').value;
+
+      const res = registerUser(name, email, phone, pass);
+      if (res.success) {
+        showToast(getLang() === 'vi' ? 'Đăng ký thành công!' : 'Account created successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 600);
+      } else {
+        showToast(res.error, 'error');
+      }
+    }
+
+    // ---- Official Google OAuth 2.0 Integration ----
+    const GOOGLE_CLIENT_ID = '885266795254-qamp3m8skft0lui3jqqckqqmvni0lepk.apps.googleusercontent.com';
+
+    function handleGoogleLoginClick() {
+      // 1. If running on file:// protocol
+      if (window.location.protocol === 'file:') {
+        showFileProtocolNotice();
+        return;
+      }
+
+      // 2. Dynamic redirect URI matching current domain
+      // Example: http://localhost:8000/index.html or https://momently.netlify.app/index.html
+      const redirectUri = window.location.origin + window.location.pathname.replace('login.html', 'index.html');
+
+      // 3. Official Google OAuth 2.0 endpoint (shows accounts on machine, redirects back to redirectUri)
+      const oauthUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' +
+        'client_id=' + encodeURIComponent(GOOGLE_CLIENT_ID) +
+        '&redirect_uri=' + encodeURIComponent(redirectUri) +
+        '&response_type=token' +
+        '&scope=' + encodeURIComponent('email profile openid') +
+        '&prompt=select_account';
+
+      // 4. Navigate directly to Google
+      window.location.href = oauthUrl;
+    }
+
+    function showFileProtocolNotice() {
+      let notice = document.getElementById('protocolNoticeModal');
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'protocolNoticeModal';
+        notice.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;animation:fadeIn 0.2s ease;';
+        notice.innerHTML = `
+          <div style="background:#fff;border-radius:16px;max-width:520px;width:100%;padding:28px 24px;box-shadow:0 20px 40px rgba(0,0,0,0.3);position:relative;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+              <svg width="28" height="28" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              </svg>
+              <h3 style="margin:0;font-size:18px;color:#202124;">Đã cấu hình Google Client ID thành công!</h3>
+            </div>
+            <p style="font-size:13.5px;color:#3c4043;line-height:1.6;margin-bottom:16px;">
+              Mã Client ID của bạn (<code>885266795254...</code>) đã được gắn vào mã nguồn. Để máy chủ Google có thể <strong>tự động chuyển hướng quay về Momently</strong>, Google yêu cầu trang web chạy trên tên miền web (chứ không chạy trực tiếp từ đường dẫn file local <code>file:///</code>).
+            </p>
+            <div style="background:#f8f9fa;border:1px solid #dadce0;border-radius:10px;padding:14px;margin-bottom:20px;font-size:13px;line-height:1.6;color:#202124;">
+              <strong>Cách mở để Google tự động chuyển về:</strong>
+              <div style="margin-top:6px;">1. Bấm nút màu xanh bên dưới để mở ngay qua <code>http://localhost:8000/login.html</code>.</div>
+              <div style="margin-top:4px;">2. Hoặc khi bạn đưa thư mục này lên <strong>Netlify</strong> (ví dụ <code>https://momently.netlify.app</code>), Google sẽ tự động chuyển về mượt mà 100%!</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <a href="http://localhost:8000/login.html" class="btn btn-primary" style="flex:1;text-align:center;text-decoration:none;padding:10px 16px;border-radius:8px;font-weight:600;font-size:13px;">
+                Mở qua Localhost (http://localhost:8000)
+              </a>
+              <button type="button" onclick="document.getElementById('protocolNoticeModal').remove()" class="btn btn-secondary" style="padding:10px 16px;border-radius:8px;font-size:13px;">
+                Đóng
+              </button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(notice);
+      }
+      notice.style.display = 'flex';
+    }
+
+    function onLangChange() {
+      setLang(getLang());
+    }
+    window.addEventListener('langchange', () => onLangChange());
+  </script>
+</body>
+</html>
+

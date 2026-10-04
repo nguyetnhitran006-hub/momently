@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Momently – Event Package Marketplace. Make your once-in-a-lifetime moment happen. Curate perfect event packages for proposals, birthdays, graduations, and more.">
+  <title>Momently – Make Your Moment Happen</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+</head>
+
+<body>
+  <!-- Navigation -->
+  <header class="navbar" id="navbar"></header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&h=1080&fit=crop"
+        alt="Romantic event setup">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-float">💍</div>
+    <div class="hero-float">🌹</div>
+    <div class="hero-float">🎂</div>
+    <div class="hero-float">📸</div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="fairytale-badge" style="background:rgba(255,255,255,0.18);color:#fff;border-color:rgba(255,255,255,0.35);margin-bottom:14px;" data-i18n="hero_badge">
+          ✨ KHOẢNH KHẮC CỔ TÍCH & KỶ NIỆM DIỆU KỲ ✨
+        </div>
+        <h1 class="fairytale-title">
+          <span data-i18n="hero_tagline"></span><br>
+          <span class="highlight" data-i18n="hero_tagline_highlight"></span>
+        </h1>
+        <p class="hero-subtitle" data-i18n="hero_subtitle"></p>
+
+        <!-- Fairytale Instant Search Box -->
+        <div class="fairytale-search-container" style="margin: 24px 0 20px;">
+          <form onsubmit="event.preventDefault(); window.location.href='explore.html?q=' + encodeURIComponent(document.getElementById('homeHeroSearch').value);" class="fairytale-search-box">
+            <span class="fairytale-search-icon">🔮</span>
+            <input type="text" id="homeHeroSearch" class="fairytale-search-input" data-i18n-placeholder="hero_search_placeholder" placeholder="Tìm kiếm địa điểm, rooftop, lounge, biệt thự, quận, huyện...">
+            <button type="submit" class="btn btn-sm btn-pink-blue" style="padding:8px 22px;border-radius:var(--radius-full);font-weight:700;" data-i18n="hero_search_btn">
+              ✨ Tìm ngay
+            </button>
+          </form>
+        </div>
+
+        <div class="hero-buttons">
+          <a href="explore.html" class="btn btn-primary btn-lg" data-i18n="hero_cta"></a>
+          <a href="#events" class="btn btn-outline-white btn-lg" data-i18n="hero_cta_secondary"></a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-number">1,200+</div>
+            <div class="hero-stat-label" data-i18n="about_stats_events"></div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number">200+</div>
+            <div class="hero-stat-label" data-i18n="about_stats_vendors"></div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number">98%</div>
+            <div class="hero-stat-label" data-i18n="about_stats_happy"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works">
+    <div class="container text-center">
+      <h2 class="section-title reveal" data-i18n="how_title"></h2>
+      <p class="section-subtitle reveal" data-i18n="how_subtitle"></p>
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">1</div>
+          <div class="step-icon">🎯</div>
+          <h3 data-i18n="how_step1_title"></h3>
+          <p data-i18n="how_step1_desc"></p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">2</div>
+          <div class="step-icon">💰</div>
+          <h3 data-i18n="how_step2_title"></h3>
+          <p data-i18n="how_step2_desc"></p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">3</div>
+          <div class="step-icon">🎨</div>
+          <h3 data-i18n="how_step3_title"></h3>
+          <p data-i18n="how_step3_desc"></p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">4</div>
+          <div class="step-icon">🎉</div>
+          <h3 data-i18n="how_step4_title"></h3>
+          <p data-i18n="how_step4_desc"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Categories -->
+  <section class="section section-alt" id="events">
+    <div class="container text-center">
+      <h2 class="section-title reveal" data-i18n="events_title"></h2>
+      <p class="section-subtitle reveal" data-i18n="events_subtitle"></p>
+      <div class="events-grid reveal" id="eventsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Featured Packages -->
+  <section class="section" id="featured">
+    <div class="container text-center">
+      <h2 class="section-title reveal" data-i18n="featured_title"></h2>
+      <p class="section-subtitle reveal" data-i18n="featured_subtitle"></p>
+      <div class="packages-grid reveal" id="featuredGrid"></div>
+      <div style="margin-top:var(--space-2xl);" class="reveal">
+        <a href="explore.html" class="btn btn-secondary" data-i18n="common_view_all"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials with International and Domestic Guests -->
+  <!-- Testimonials with International and Domestic Guests -->
+  <section class="section section-alt" id="testimonials">
+    <div class="container text-center">
+      <div class="fairytale-badge" style="margin-bottom:10px;" data-i18n="testimonials_badge">✨ TRẢI NGHIỆM THỰC TẾ ✨</div>
+      <h2 class="section-title reveal" data-i18n="testimonials_title"></h2>
+      <p class="section-subtitle reveal" data-i18n="testimonials_subtitle"></p>
+      <div class="testimonials-grid reveal" id="testimonialsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Dedicated Our Founders Section (From FTUers with passion & Ghibli Spirits) -->
+  <section class="section" id="founders">
+    <div class="container">
+      <div class="founders-section-wrap">
+        <div class="founders-header">
+          <div class="ftu-passion-badge" data-i18n="founders_badge">
+            ✨ From FTUers with passion ✨
+          </div>
+          <h2 class="section-title" style="margin-bottom:10px;" data-i18n="founders_title">Our Founders</h2>
+          <p class="section-subtitle" style="margin-bottom:0;" data-i18n="founders_subtitle">
+            Momently được sáng lập bởi nhóm sinh viên Đại học Ngoại thương (FTU) với trọn vẹn đam mê, tư duy sáng tạo và nguồn cảm hứng bất tận từ thế giới hoạt hình Studio Ghibli ấm áp.
+          </p>
+        </div>
+
+        <div class="founders-grid" id="homeFoundersGrid"></div>
+
+        <div style="margin-top:var(--space-2xl);text-align:center;">
+          <a href="about.html" class="btn btn-secondary" data-i18n="founders_more_btn">
+            Tìm hiểu sâu hơn về câu chuyện Momently & FTU →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Vision & FTU Team Callout -->
+  <section class="section" style="background: radial-gradient(circle at 50% 50%, rgba(45, 106, 79, 0.08) 0%, rgba(244, 162, 97, 0.08) 50%, rgba(254, 252, 248, 1) 100%); border-top: 1px solid var(--color-border-light);">
+    <div class="container text-center">
+      <div class="ftu-passion-badge" data-i18n="home_vision_badge">
+        ✨ TỪ SINH VIÊN FTU VỚI TRỌN VẸN ĐAM MÊ ✨
+      </div>
+      <h2 class="section-title reveal" style="font-size:2.4rem;margin-bottom:12px;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-i18n="home_vision_title">"Make every moment matter."</h2>
+      <p class="section-subtitle reveal" style="max-width:760px;margin:0 auto 24px;" data-i18n="home_vision_desc">
+        Momently ra đời từ sự kết hợp giữa tư duy kinh doanh, công nghệ và sự quan tâm sâu sắc đến trải nghiệm người dùng, giúp bạn và những người thân yêu tận hưởng trọn vẹn những khoảnh khắc đáng nhớ nhất.
+      </p>
+      <div class="reveal">
+        <a href="explore.html" class="btn btn-primary" data-i18n="home_vision_btn">Bắt đầu lên kế hoạch sự kiện cùng Momently →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Initialize
+    initApp('home');
+
+    // Handle Google OAuth 2.0 Token Redirect from accounts.google.com
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      if (accessToken) {
+        fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        })
+        .then(res => res.json())
+        .then(profile => {
+          const googleUser = {
+            id: 'google-' + (profile.sub || Date.now()),
+            name: profile.name || 'Người dùng Google',
+            email: profile.email || 'google.user@gmail.com',
+            phone: '0859062212',
+            role: 'user',
+            provider: 'google',
+            avatar: profile.picture || '🌐',
+            searches: [],
+            bookings: [],
+            createdAt: new Date().toISOString()
+          };
+          localStorage.setItem('momently_user', JSON.stringify(googleUser));
+          try {
+            const users = JSON.parse(localStorage.getItem('momently_users') || '[]');
+            const idx = users.findIndex(u => u.email.toLowerCase() === googleUser.email.toLowerCase());
+            if (idx >= 0) users[idx] = googleUser; else users.push(googleUser);
+            localStorage.setItem('momently_users', JSON.stringify(users));
+          } catch (e) {}
+
+          showToast(getLang() === 'vi' ? `✨ Xin chào ${googleUser.name}! Đăng nhập Google chính thức thành công.` : `✨ Welcome ${googleUser.name}! Google sign-in successful.`, 'success');
+          try {
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } catch (e) {}
+          initApp('home');
+        })
+        .catch(err => {
+          console.error('Google profile error:', err);
+        });
+      }
+    } else if (window.location.search.includes('login=google')) {
+      const u = getUser();
+      const name = u ? u.name : 'Bạn';
+      showToast(getLang() === 'vi' ? `✨ Xin chào ${name}! Đăng nhập thành công.` : `✨ Welcome ${name}! Successfully signed in.`, 'success');
+      try {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (e) {}
+    }
+
+    // Render events grid
+    function renderEvents() {
+      const grid = document.getElementById('eventsGrid');
+      grid.innerHTML = eventTypes.map(ev => `
+        <a href="explore.html?event=${ev.id}" class="event-card" style="--event-color: ${ev.color}">
+          <span class="event-card-icon">${ev.icon}</span>
+          <h3 data-i18n="event_${ev.id}">${t('event_' + ev.id)}</h3>
+        </a>
+      `).join('');
+    }
+
+    // Render featured packages
+    function renderFeatured() {
+      const grid = document.getElementById('featuredGrid');
+      const featured = getFeaturedPackages();
+      grid.innerHTML = featured.map(pkg => renderPackageCard(pkg)).join('');
+    }
+
+    // Render testimonials (Domestic & International with country flags)
+    function renderTestimonials() {
+      const grid = document.getElementById('testimonialsGrid');
+      const lang = getLang();
+      grid.innerHTML = reviews.map(r => {
+        const pkg = getPackageById(r.packageId);
+        const pkgName = pkg ? (lang === 'vi' ? pkg.name_vi : pkg.name_en) : (lang === 'vi' ? 'Trải nghiệm Momently Hà Nội' : 'Momently Hanoi Experience');
+        const isForeign = r.isForeign || (r.origin_en && !r.origin_en.toLowerCase().includes('vietnam')) || (r.origin_vi && !r.origin_vi.toLowerCase().includes('việt nam'));
+        // Foreign client reviews are always authentically in English as requested
+        const comment = isForeign ? r.comment_en : (lang === 'vi' ? r.comment_vi : r.comment_en);
+        const origin = (lang === 'vi' ? r.origin_vi : r.origin_en) || r.origin || (lang === 'vi' ? 'Hà Nội, Việt Nam 🇻🇳' : 'Hanoi, Vietnam 🇻🇳');
+        return `
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">${comment}</p>
+            <div class="testimonial-author" style="margin-top:14px;">
+              <div class="testimonial-avatar">${r.avatar || '⭐'}</div>
+              <div class="testimonial-info">
+                <h4>${r.userName}</h4>
+                <p style="font-size:11px;color:var(--color-primary);font-weight:600;">${origin}</p>
+                <p style="font-size:11px;color:var(--color-text-muted);">${pkgName}</p>
+              </div>
+            </div>
+            <div class="testimonial-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render Our Founders (Avatar, Name, and Role only)
+    function renderHomeFounders() {
+      const grid = document.getElementById('homeFoundersGrid');
+      if (!grid || typeof founders === 'undefined') return;
+
+      const lang = getLang();
+      grid.innerHTML = founders.map((f, idx) => {
+        const role = lang === 'vi' ? f.role_vi : f.role_en;
+        return `
+          <div class="founder-card" style="--delay: ${idx}">
+            <div class="founder-avatar-wrap">
+              <img src="${f.avatar}" alt="${f.name}" class="founder-avatar-img" loading="lazy">
+            </div>
+            <h3 class="founder-name">${f.name}</h3>
+            <p class="founder-role">${role}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render all
+    function renderAll() {
+      renderEvents();
+      renderFeatured();
+      renderTestimonials();
+      renderHomeFounders();
+      setLang(getLang()); // Apply translations
+    }
+
+    renderAll();
+
+    // Language change handler
+    function onLangChange() {
+      renderAll();
+    }
+    window.addEventListener('langchange', () => onLangChange());
+  </script>
+
+</body>
+
+</html>

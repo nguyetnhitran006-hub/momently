@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Complete your event package booking on Momently. Secure checkout with flexible payment methods.">
+  <title>Checkout & Payment – Momently</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <style>
+    .vietqr-box {
+      background: #fdfaf6;
+      border: 1.5px dashed var(--color-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      text-align: center;
+      margin-top: var(--space-lg);
+      display: none;
+    }
+    .momo-box {
+      background: #fdf2f7;
+      border: 1.5px dashed #d82d8b;
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      text-align: center;
+      margin-top: var(--space-lg);
+      display: none;
+    }
+    .promo-row {
+      display: flex;
+      gap: 8px;
+      margin-top: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .badge-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      background: rgba(200, 149, 108, 0.15);
+      color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar" id="navbar"></header>
+
+  <!-- Checkout Page Content -->
+  <main class="checkout-page">
+    <div class="container">
+      <div style="margin-bottom: var(--space-2xl);">
+        <a href="explore.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--color-text-muted);text-decoration:none;font-size:var(--text-sm);margin-bottom:var(--space-sm);">
+          ← <span data-i18n="checkout_back">Back to Packages</span>
+        </a>
+        <h1 class="section-title" style="text-align:left;margin-bottom:var(--space-xs);" data-i18n="checkout_title">Complete Your Booking</h1>
+        <p style="color:var(--color-text-muted);" id="checkoutSubtitle" data-i18n="checkout_subtitle">Review your package details and finalize your reservation</p>
+      </div>
+
+      <div class="checkout-layout">
+        <!-- Left: Form -->
+        <div class="checkout-form">
+          <!-- Step 1: Customer Info -->
+          <div class="checkout-section">
+            <h3 style="display:flex;align-items:center;gap:10px;">
+              <span style="background:var(--color-primary);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;">1</span>
+              <span data-i18n="checkout_contact">Contact Information</span>
+            </h3>
+
+            <div class="form-group">
+              <label class="form-label" data-i18n="auth_name">Full Name</label>
+              <input type="text" id="custName" class="form-input" placeholder="Nguyễn Văn A" required>
+            </div>
+
+            <div class="card-inputs">
+              <div class="input-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="auth_phone">Phone Number</label>
+                  <input type="tel" id="custPhone" class="form-input" placeholder="0901234567" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="auth_email">Email Address</label>
+                  <input type="email" id="custEmail" class="form-input" placeholder="email@example.com" required>
+                </div>
+              </div>
+
+              <div class="input-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="checkout_event_date">Event Date</label>
+                  <input type="date" id="eventDate" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="checkout_guests">Number of Guests</label>
+                  <input type="number" id="guestCount" class="form-input" min="1" max="500" value="2">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="checkout_notes">Special Notes</label>
+                <textarea id="eventNotes" class="form-input" rows="3" data-i18n-placeholder="checkout_notes_placeholder" placeholder="Ghi chú về thời gian, địa điểm cụ thể hoặc yêu cầu đặc biệt..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Payment Method -->
+          <div class="checkout-section">
+            <h3 style="display:flex;align-items:center;gap:10px;">
+              <span style="background:var(--color-primary);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;">2</span>
+              <span data-i18n="checkout_payment">Payment Method</span>
+            </h3>
+
+            <div class="payment-options">
+              <div class="payment-option selected" data-method="card" onclick="selectPaymentMethod('card')">
+                <span class="payment-icon">💳</span>
+                <span class="payment-label" data-i18n="checkout_card">Credit / Debit</span>
+              </div>
+              <div class="payment-option" data-method="bank" onclick="selectPaymentMethod('bank')">
+                <span class="payment-icon">🏛️</span>
+                <span class="payment-label" data-i18n="checkout_bank">VietQR Transfer</span>
+              </div>
+              <div class="payment-option" data-method="momo" onclick="selectPaymentMethod('momo')">
+                <span class="payment-icon">📱</span>
+                <span class="payment-label" data-i18n="checkout_ewallet">MoMo / E-Wallet</span>
+              </div>
+            </div>
+
+            <!-- Card Form -->
+            <div id="cardPaymentBox" class="card-inputs">
+              <div class="form-group">
+                <label class="form-label" data-i18n="checkout_card_number">Card Number</label>
+                <input type="text" id="cardNumber" class="form-input" placeholder="4111 2222 3333 4444" maxlength="19" value="9704 0000 1234 5678">
+              </div>
+              <div class="input-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="checkout_card_expiry">MM/YY</label>
+                  <input type="text" id="cardExpiry" class="form-input" placeholder="12/28" maxlength="5" value="08/28">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="checkout_card_cvv">CVV</label>
+                  <input type="password" id="cardCvv" class="form-input" placeholder="•••" maxlength="4" value="888">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="checkout_card_name">Cardholder Name</label>
+                <input type="text" id="cardHolder" class="form-input" placeholder="NGUYEN VAN A" value="NGUYEN VAN A">
+              </div>
+            </div>
+
+            <!-- VietQR Box -->
+            <div id="bankPaymentBox" class="vietqr-box">
+              <h4 style="color:var(--color-primary);margin-bottom:var(--space-xs);" data-i18n="checkout_vietqr_title">Quét mã VietQR chuyển khoản tức thì</h4>
+              <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="checkout_vietqr_sub">Ngân hàng Techcombank • Miễn phí giao dịch 24/7</p>
+              
+              <div style="background:#fff;padding:16px;display:inline-block;border-radius:12px;box-shadow:var(--shadow-md);margin-bottom:var(--space-md);">
+                <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="180" height="180" fill="white"/>
+                  <path d="M20 20H70V70H20V20ZM30 30V60H60V30H30Z" fill="#1A1A1A"/>
+                  <path d="M40 40H50V50H40V40Z" fill="#C8956C"/>
+                  <path d="M110 20H160V70H110V20ZM120 30V60H150V30H120Z" fill="#1A1A1A"/>
+                  <path d="M130 40H140V50H130V40Z" fill="#C8956C"/>
+                  <path d="M20 110H70V160H20V110ZM30 120V150H60V120H30Z" fill="#1A1A1A"/>
+                  <path d="M40 130H50V140H40V130Z" fill="#C8956C"/>
+                  <rect x="85" y="25" width="10" height="40" fill="#1A1A1A"/>
+                  <rect x="110" y="85" width="40" height="10" fill="#1A1A1A"/>
+                  <rect x="85" y="85" width="15" height="15" fill="#C8956C"/>
+                  <rect x="25" y="85" width="40" height="10" fill="#1A1A1A"/>
+                  <rect x="110" y="110" width="20" height="20" fill="#1A1A1A"/>
+                  <rect x="140" y="135" width="20" height="20" fill="#C8956C"/>
+                  <rect x="85" y="125" width="15" height="30" fill="#1A1A1A"/>
+                  <circle cx="90" cy="90" r="14" fill="#C8956C"/>
+                  <text x="90" y="94" font-size="12" fill="white" text-anchor="middle" font-weight="bold">M</text>
+                </svg>
+              </div>
+
+              <div style="font-size:var(--text-sm);text-align:left;max-width:320px;margin:0 auto;background:#fff;padding:12px 16px;border-radius:8px;border:1px solid var(--color-border-light);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                  <span style="color:var(--color-text-muted);" data-i18n="checkout_bank_name">Ngân hàng:</span>
+                  <strong>Techcombank</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                  <span style="color:var(--color-text-muted);" data-i18n="checkout_bank_acc">Số tài khoản:</span>
+                  <strong style="color:var(--color-primary);letter-spacing:1px;">1903 8888 6688</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                  <span style="color:var(--color-text-muted);" data-i18n="checkout_bank_holder">Chủ TK:</span>
+                  <strong>CONG TY MOMENTLY VIET NAM</strong>
+                </div>
+                <div style="display:flex;justify-content:space-between;">
+                  <span style="color:var(--color-text-muted);" data-i18n="checkout_bank_memo">Nội dung:</span>
+                  <strong id="vietqrMemo">MMT BOOKING</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- MoMo Box -->
+            <div id="momoPaymentBox" class="momo-box">
+              <h4 style="color:#d82d8b;margin-bottom:var(--space-xs);" data-i18n="checkout_momo_title">Thanh toán qua Ví MoMo</h4>
+              <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="checkout_momo_sub">Mở ứng dụng MoMo và quét mã để hoàn tất trong 30 giây</p>
+              
+              <div style="background:#fff;padding:16px;display:inline-block;border-radius:12px;box-shadow:var(--shadow-md);margin-bottom:var(--space-md);">
+                <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
+                  <rect width="160" height="160" fill="white"/>
+                  <path d="M15 15H60V60H15V15ZM25 25V50H50V25H25Z" fill="#d82d8b"/>
+                  <path d="M100 15H145V60H100V15ZM110 25V50H135V25H110Z" fill="#d82d8b"/>
+                  <path d="M15 100H60V145H15V100ZM25 110V135H50V110H25Z" fill="#d82d8b"/>
+                  <circle cx="80" cy="80" r="18" fill="#d82d8b"/>
+                  <text x="80" y="85" font-size="11" fill="white" text-anchor="middle" font-weight="bold">MoMo</text>
+                </svg>
+              </div>
+              <p style="font-size:var(--text-xs);color:var(--color-text-muted);" data-i18n="checkout_momo_hotline">Số hotline hỗ trợ MoMo 24/7: 1900 54 54 41</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Order Summary Sidebar -->
+        <div class="order-summary">
+          <div class="summary-card">
+            <h3 style="margin-bottom:var(--space-md);" data-i18n="checkout_summary">Order Summary</h3>
+            
+            <div class="summary-package" id="pkgSummaryHeader">
+              <img id="pkgImage" src="" alt="Package">
+              <div class="summary-package-info">
+                <div id="pkgEventBadge" class="badge-pill" style="margin-bottom:4px;"></div>
+                <h4 id="pkgName"></h4>
+                <p id="pkgMeta"></p>
+              </div>
+            </div>
+
+            <!-- Services Breakdown -->
+            <div id="servicesBreakdown" style="max-height:220px;overflow-y:auto;margin-bottom:var(--space-md);padding-right:4px;"></div>
+
+            <!-- Promo Code -->
+            <div style="border-top:1px solid var(--color-border-light);padding-top:var(--space-md);">
+              <label class="form-label" style="font-size:var(--text-xs);" data-i18n="checkout_promo_label">Mã ưu đãi / Promo Code</label>
+              <div class="promo-row">
+                <input type="text" id="promoInput" class="form-input" data-i18n-placeholder="checkout_promo_placeholder" placeholder="MOMENTLY (-10%)" style="font-size:var(--text-xs);padding:8px 12px;text-transform:uppercase;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="applyPromo()" data-i18n="checkout_promo_apply">Áp dụng</button>
+              </div>
+              <div id="promoMessage" style="font-size:var(--text-xs);margin-bottom:var(--space-sm);"></div>
+            </div>
+
+            <!-- Calculations -->
+            <div style="border-top:1px solid var(--color-border-light);padding-top:var(--space-md);">
+              <div class="summary-line">
+                <span class="label" data-i18n="checkout_subtotal">Subtotal</span>
+                <span id="subtotalVal">0₫</span>
+              </div>
+              <div class="summary-line discount" id="discountRow" style="display:none;">
+                <span class="label" data-i18n="checkout_discount">Discount</span>
+                <span id="discountVal">-0₫</span>
+              </div>
+              <div class="summary-line">
+                <span class="label" data-i18n="checkout_service_fee">Service Fee</span>
+                <span style="color:var(--color-success);font-weight:600;" data-i18n="checkout_fee_free">Miễn phí (0₫)</span>
+              </div>
+              <div class="summary-total">
+                <span data-i18n="checkout_total">Total</span>
+                <span class="amount" id="totalVal">0₫</span>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <button type="button" id="payButton" class="btn btn-primary btn-lg" style="width:100%;margin-top:var(--space-xl);" onclick="processPayment()">
+              🔒 <span data-i18n="checkout_confirm">Confirm & Pay</span>
+            </button>
+
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:var(--space-md);color:var(--color-text-muted);font-size:var(--text-xs);">
+              <span data-i18n="checkout_ssl_secure">🛡️ Bảo mật SSL 256-bit</span>
+              <span>•</span>
+              <span data-i18n="checkout_guarantee">Cam kết hoàn tiền 100%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Success Modal Overlay -->
+  <div id="successOverlay" class="success-overlay" style="display:none;">
+    <div class="success-modal" style="max-width:580px;">
+      <div class="success-icon">🎉</div>
+      <h2 style="font-size:var(--text-2xl);color:var(--color-primary);margin-bottom:6px;" data-i18n="checkout_success_title">Đặt Sự Kiện Thành Công!</h2>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-md);" data-i18n="checkout_success_msg">
+        Cảm ơn bạn đã tin tưởng dịch vụ tổ chức sự kiện cổ tích của Momently.
+      </p>
+
+      <!-- Automated Email Dispatch Notification -->
+      <div style="background:linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(236, 72, 153, 0.08));border:1.5px solid rgba(56, 189, 248, 0.4);border-radius:var(--radius-lg);padding:14px;margin-bottom:var(--space-md);text-align:left;">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:#0284c7;font-size:13px;margin-bottom:4px;">
+          <span data-i18n="checkout_auto_email_title">✉️ THÔNG BÁO GỬI EMAIL TỰ ĐỘNG:</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text);line-height:1.6;" data-i18n-html="checkout_success_email_note">
+          • Dữ liệu booking đã được gửi tới Ban Tổ Chức: <strong style="color:#ec4899;">nhitdnf14.38ftu@gmail.com</strong><br>
+          • Email xác nhận đặt chỗ & hóa đơn điện tử đã gửi tới khách hàng<br>
+          • Đội ngũ tư vấn sẽ liên hệ qua số điện thoại/Zalo: <strong>0859062212</strong> trong vòng 15 phút.
+        </div>
+      </div>
+      
+      <div style="text-align:left;background:var(--color-bg);padding:var(--space-lg);border-radius:var(--radius-md);margin-bottom:var(--space-md);border:1px solid var(--color-border-light);">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:var(--color-text-muted);" data-i18n="checkout_booking_id">Mã đơn đặt (Booking ID):</span>
+          <span class="success-booking-id" id="modalBookingId" style="margin:0;padding:2px 8px;font-size:14px;">MMT-0000</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:var(--color-text-muted);" data-i18n="checkout_pkg_label">Gói sự kiện:</span>
+          <strong id="modalPkgName"></strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:var(--color-text-muted);" data-i18n="checkout_date_label">Ngày tổ chức:</span>
+          <strong id="modalEventDate"></strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:var(--color-text-muted);" data-i18n="checkout_location_label">Địa điểm:</span>
+          <strong id="modalPkgAddress" style="max-width:280px;text-align:right;"></strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top:1px dashed var(--color-border);padding-top:6px;margin-top:6px;">
+          <span style="color:var(--color-text-muted);" data-i18n="checkout_total_label">Tổng thanh toán:</span>
+          <strong style="color:var(--color-primary);font-size:16px;" id="modalTotalPaid"></strong>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <a id="modalMapBtn" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-pink-blue" style="flex:1;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:4px;" data-i18n="checkout_open_map_btn">
+          🗺️ Mở Google Maps Địa Điểm
+        </a>
+        <a href="https://zalo.me/0859062212" target="_blank" rel="noopener" class="btn btn-sm btn-blue" style="flex:1;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:4px;" data-i18n="checkout_zalo_btn">
+          💬 Zalo Tư Vấn: 0859062212
+        </a>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a id="btnMailtoDispatch" href="#" class="btn btn-outline" style="text-decoration:none;font-size:12px;display:inline-flex;align-items:center;justify-content:center;gap:6px;" data-i18n="checkout_email_copy_btn">
+          📧 Gửi bản sao đơn hàng qua Email (nhitdnf14.38ftu@gmail.com)
+        </a>
+        <a href="profile.html" class="btn btn-primary" style="text-decoration:none;" data-i18n="checkout_view_profile_btn">
+          📋 Xem Lịch Sử Đơn Đặt Trong Hồ Sơ
+        </a>
+        <a href="index.html" class="btn btn-secondary" style="text-decoration:none;" data-i18n="checkout_home_btn">
+          Về Trang Chủ
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('explore');
+
+    // Retrieve order data from URL or sessionStorage
+    const urlPkgId = getUrlParam('id');
+    const storedCheckout = JSON.parse(sessionStorage.getItem('momently_checkout') || 'null');
+    
+    let currentPkg = null;
+    let selectedServices = [];
+    let baseTotal = 0;
+    let discountAmount = 0;
+    let promoApplied = false;
+    let activePaymentMethod = 'card';
+
+    if (storedCheckout && storedCheckout.package) {
+      currentPkg = storedCheckout.package;
+      selectedServices = storedCheckout.services || currentPkg.services;
+      baseTotal = storedCheckout.total || selectedServices.reduce((sum, s) => sum + s.price, 0);
+    } else if (urlPkgId) {
+      currentPkg = getPackageById(urlPkgId);
+      if (currentPkg) {
+        selectedServices = [...currentPkg.services];
+        baseTotal = currentPkg.price;
+      }
+    }
+
+    // If no package, fallback to pkg-001 for demo
+    if (!currentPkg) {
+      currentPkg = packages[0];
+      selectedServices = [...currentPkg.services];
+      baseTotal = currentPkg.price;
+    }
+
+    // Pre-fill user data if logged in
+    const user = getUser();
+    if (user) {
+      if (user.name) document.getElementById('custName').value = user.name;
+      if (user.phone) document.getElementById('custPhone').value = user.phone;
+      if (user.email) document.getElementById('custEmail').value = user.email;
+      if (user.searches && user.searches.length > 0 && user.searches[0].date) {
+        document.getElementById('eventDate').value = user.searches[0].date;
+      }
+    }
+
+    // Default event date to 14 days from now if empty
+    if (!document.getElementById('eventDate').value) {
+      const future = new Date();
+      future.setDate(future.getDate() + 14);
+      document.getElementById('eventDate').value = future.toISOString().split('T')[0];
+    }
+    document.getElementById('eventDate').min = new Date().toISOString().split('T')[0];
+
+    // Select payment method
+    function selectPaymentMethod(method) {
+      activePaymentMethod = method;
+      document.querySelectorAll('.payment-option').forEach(el => {
+        el.classList.toggle('selected', el.getAttribute('data-method') === method);
+      });
+
+      document.getElementById('cardPaymentBox').style.display = method === 'card' ? 'grid' : 'none';
+      document.getElementById('bankPaymentBox').style.display = method === 'bank' ? 'block' : 'none';
+      document.getElementById('momoPaymentBox').style.display = method === 'momo' ? 'block' : 'none';
+    }
+
+    // Render Order Summary
+    function renderOrderSummary() {
+      const lang = getLang();
+      const pkgName = lang === 'vi' ? currentPkg.name_vi : currentPkg.name_en;
+      
+      document.getElementById('pkgImage').src = currentPkg.image;
+      document.getElementById('pkgName').textContent = pkgName;
+      document.getElementById('pkgEventBadge').textContent = t('event_' + currentPkg.event);
+      document.getElementById('pkgMeta').textContent = `👥 ${currentPkg.maxGuests} ${t('common_guests')} • 🎨 ${t('style_' + currentPkg.style)}`;
+
+      // Services list
+      document.getElementById('servicesBreakdown').innerHTML = selectedServices.map(s => {
+        const sName = lang === 'vi' ? s.name_vi : s.name_en;
+        return `
+          <div class="summary-line" style="margin-bottom:6px;">
+            <span class="label">✓ ${sName}</span>
+            <span style="font-weight:500;">${formatPrice(s.price)}</span>
+          </div>
+        `;
+      }).join('');
+
+      // Totals
+      const subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
+      const finalTotal = Math.max(0, subtotal - discountAmount);
+
+      document.getElementById('subtotalVal').textContent = formatPrice(subtotal);
+      document.getElementById('totalVal').textContent = formatPrice(finalTotal);
+
+      const discountRow = document.getElementById('discountRow');
+      if (discountAmount > 0) {
+        discountRow.style.display = 'flex';
+        document.getElementById('discountVal').textContent = '-' + formatPrice(discountAmount);
+      } else {
+        discountRow.style.display = 'none';
+      }
+
+      // Memo for VietQR
+      const randomId = 'MMT' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('vietqrMemo').textContent = `${randomId} ${document.getElementById('custPhone').value || 'MOMENTLY'}`;
+    }
+
+    // Promo Code
+    function applyPromo() {
+      const code = document.getElementById('promoInput').value.trim().toUpperCase();
+      const msg = document.getElementById('promoMessage');
+      const subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
+
+      if (code === 'MOMENTLY' || code === 'MOMENTLY2026' || code === 'FTU') {
+        discountAmount = Math.round(subtotal * 0.1);
+        promoApplied = true;
+        msg.innerHTML = '<span style="color:var(--color-success);font-weight:600;">✓ Áp dụng thành công! Bạn được giảm 10%.</span>';
+        showToast(getLang() === 'vi' ? 'Đã áp dụng mã giảm giá 10%!' : '10% discount applied!', 'success');
+      } else if (code === '') {
+        discountAmount = 0;
+        promoApplied = false;
+        msg.textContent = '';
+      } else {
+        discountAmount = 0;
+        promoApplied = false;
+        msg.innerHTML = '<span style="color:var(--color-error);">✕ Mã không hợp lệ. Hãy thử: MOMENTLY</span>';
+      }
+      renderOrderSummary();
+    }
+
+    // Process Payment
+    function processPayment() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const date = document.getElementById('eventDate').value;
+      const guests = document.getElementById('guestCount').value || 2;
+      const notes = document.getElementById('eventNotes').value.trim();
+
+      if (!name || !phone || !email || !date) {
+        showToast(getLang() === 'vi' ? 'Vui lòng điền đủ họ tên, số điện thoại, email và ngày tổ chức!' : 'Please fill in all contact details and date!', 'error');
+        return;
+      }
+
+      const payBtn = document.getElementById('payButton');
+      const originalText = payBtn.innerHTML;
+      const lang = getLang();
+      payBtn.disabled = true;
+      payBtn.innerHTML = lang === 'vi' ? '⏳ Đang xử lý thanh toán an toàn...' : '⏳ Securely processing payment...';
+
+      setTimeout(() => {
+        payBtn.disabled = false;
+        payBtn.innerHTML = originalText;
+
+        const bookingId = 'MMT-' + Math.floor(1000 + Math.random() * 9000);
+        const subtotal = selectedServices.reduce((sum, s) => sum + s.price, 0);
+        const finalTotal = Math.max(0, subtotal - discountAmount);
+
+        const bookingRecord = {
+          id: bookingId,
+          packageId: currentPkg.id,
+          packageName: currentPkg.name_en,
+          packageNameVi: currentPkg.name_vi,
+          customerName: name,
+          customerPhone: phone,
+          customerEmail: email,
+          date: date,
+          guests: parseInt(guests, 10),
+          notes: notes,
+          paymentMethod: activePaymentMethod,
+          services: selectedServices,
+          total: finalTotal,
+          status: 'confirmed',
+          createdAt: new Date().toISOString()
+        };
+
+        saveBooking(bookingRecord);
+
+        const curLang = getLang();
+        const pkgDisplayName = curLang === 'vi' ? currentPkg.name_vi : currentPkg.name_en;
+        const pkgAddr = (curLang === 'vi' ? currentPkg.address_vi : currentPkg.address_en) || currentPkg.address_vi || 'Hà Nội';
+        const mapUrl = currentPkg.mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(pkgDisplayName + ' Hà Nội')}`;
+
+        document.getElementById('modalBookingId').textContent = bookingId;
+        document.getElementById('modalPkgName').textContent = pkgDisplayName;
+        document.getElementById('modalEventDate').textContent = date;
+        document.getElementById('modalPkgAddress').textContent = pkgAddr;
+        document.getElementById('modalTotalPaid').textContent = formatPrice(finalTotal);
+        document.getElementById('modalCustEmailConfirm').textContent = email;
+        document.getElementById('modalMapBtn').href = mapUrl;
+
+        // Build mailto link for dispatch to nhitdnf14.38ftu@gmail.com with customer confirmation
+        const servicesListStr = selectedServices.map(s => `- ${curLang === 'vi' ? s.name_vi : s.name_en}: ${formatPrice(s.price)}`).join('\n');
+        const mailSubject = encodeURIComponent(curLang === 'vi' 
+          ? `[MOMENTLY BOOKING] Xác nhận đơn đặt ${bookingId} - ${pkgDisplayName}`
+          : `[MOMENTLY BOOKING] Reservation Confirmed ${bookingId} - ${pkgDisplayName}`);
+        const mailBody = encodeURIComponent(curLang === 'vi'
+          ? (`Kính gửi Ban Tổ Chức Momently & Quý khách hàng,\n\nThông tin đơn đặt sự kiện thành công:\n\n` +
+            `• Mã đơn đặt: ${bookingId}\n` +
+            `• Gói sự kiện: ${pkgDisplayName}\n` +
+            `• Địa chỉ tổ chức: ${pkgAddr}\n` +
+            `• Google Maps: ${mapUrl}\n` +
+            `• Ngày tổ chức: ${date}\n` +
+            `• Số khách: ${guests} người\n` +
+            `• Khách hàng: ${name}\n` +
+            `• Điện thoại: ${phone}\n` +
+            `• Email khách hàng: ${email}\n` +
+            `• Phương thức thanh toán: ${activePaymentMethod.toUpperCase()}\n` +
+            `• Tổng thanh toán: ${formatPrice(finalTotal)}\n` +
+            `• Ghi chú: ${notes || 'Không có'}\n\n` +
+            `Danh sách dịch vụ đi kèm:\n${servicesListStr}\n\n` +
+            `Ban Tổ Chức Momently - Hotline & Zalo: 0859062212 | Email: nhitdnf14.38ftu@gmail.com`)
+          : (`Dear Momently Organizing Committee & Valued Customer,\n\nEvent booking confirmation details:\n\n` +
+            `• Booking ID: ${bookingId}\n` +
+            `• Event Package: ${pkgDisplayName}\n` +
+            `• Venue Address: ${pkgAddr}\n` +
+            `• Google Maps: ${mapUrl}\n` +
+            `• Event Date: ${date}\n` +
+            `• Number of Guests: ${guests}\n` +
+            `• Customer Name: ${name}\n` +
+            `• Customer Phone: ${phone}\n` +
+            `• Customer Email: ${email}\n` +
+            `• Payment Method: ${activePaymentMethod.toUpperCase()}\n` +
+            `• Total Amount: ${formatPrice(finalTotal)}\n` +
+            `• Notes: ${notes || 'None'}\n\n` +
+            `Included Services:\n${servicesListStr}\n\n` +
+            `Momently Organizing Committee - Hotline & Zalo: 0859062212 | Email: nhitdnf14.38ftu@gmail.com`));
+
+        document.getElementById('btnMailtoDispatch').href = `mailto:nhitdnf14.38ftu@gmail.com?cc=${encodeURIComponent(email)}&subject=${mailSubject}&body=${mailBody}`;
+
+        document.getElementById('successOverlay').style.display = 'flex';
+        showToast(curLang === 'vi' 
+          ? '✨ Dữ liệu booking đã được gửi đến ban tổ chức & email xác nhận đã gửi tới khách hàng!'
+          : '✨ Booking details sent to organizers and confirmation emailed to you!', 'success');
+      }, 900);
+    }
+
+    renderOrderSummary();
+
+    function onLangChange() {
+      setLang(getLang());
+      renderOrderSummary();
+    }
+    window.addEventListener('langchange', () => onLangChange());
+  </script>
+</body>
+</html>

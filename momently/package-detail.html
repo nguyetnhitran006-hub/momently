@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and customize event packages on Momently. Select services, adjust your package, and book with one click.">
+  <title>Package Detail – Momently</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <main class="detail-hero">
+    <div class="container">
+      <!-- Gallery -->
+      <div class="detail-gallery" id="gallery">
+        <img id="galleryImg" src="" alt="">
+        <div class="gallery-dots" id="galleryDots"></div>
+        <div class="gallery-nav">
+          <button onclick="galleryPrev()">◀</button>
+          <button onclick="galleryNext()">▶</button>
+        </div>
+      </div>
+
+      <!-- Layout -->
+      <div class="detail-layout">
+        <!-- Info -->
+        <div class="detail-info">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:var(--space-md);">
+            <span id="detailEventBadge" style="font-size:var(--text-xs);background:var(--color-bg-alt);padding:4px 14px;border-radius:var(--radius-full);"></span>
+            <span id="detailStyleBadge" style="font-size:var(--text-xs);background:var(--color-bg-alt);padding:4px 14px;border-radius:var(--radius-full);"></span>
+          </div>
+          <h1 id="detailTitle"></h1>
+          <div class="detail-meta">
+            <div class="detail-meta-item">
+              <span class="icon">⭐</span>
+              <span id="detailRating"></span>
+              <span id="detailReviewCount" style="color:var(--color-text-light);"></span>
+            </div>
+            <div class="detail-meta-item">
+              <span class="icon">👥</span>
+              <span id="detailGuests"></span>
+            </div>
+            <div class="detail-meta-item">
+              <span class="icon">📦</span>
+              <span id="detailServiceCount"></span>
+            </div>
+            <div class="detail-meta-item">
+              <span class="icon">🔥</span>
+              <span id="detailBooked"></span>
+            </div>
+          </div>
+          <p class="detail-description" id="detailDescription"></p>
+
+          <!-- Location & Directions Section -->
+          <div class="location-directions-card" style="background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-xl);margin:var(--space-xl) 0;box-shadow:var(--shadow-sm);">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:var(--space-md);">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.8rem;">📍</span>
+                <div>
+                  <h3 style="margin:0;font-size:var(--text-lg);color:var(--color-secondary);" data-i18n="directions_title">Địa chỉ cụ thể & Hướng dẫn di chuyển</h3>
+                  <span id="detailLocationTag" style="font-size:var(--text-xs);color:var(--color-primary);font-weight:600;"></span>
+                </div>
+              </div>
+              <a id="detailMapLink" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-pink-blue" data-i18n="directions_open_map">🗺️ Mở Google Maps</a>
+            </div>
+
+            <div style="background:var(--color-bg-alt);border:1px solid var(--color-border-light);border-radius:var(--radius-lg);padding:var(--space-md);margin-bottom:var(--space-md);">
+              <div style="font-size:var(--text-xs);font-weight:700;color:var(--color-text-muted);text-transform:uppercase;margin-bottom:4px;" data-i18n="directions_address">Địa chỉ cụ thể:</div>
+              <div id="detailAddress" style="font-size:var(--text-sm);font-weight:600;color:var(--color-secondary);line-height:1.5;"></div>
+            </div>
+
+            <div>
+              <div style="font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;margin-bottom:6px;" data-i18n="directions_transport">Hướng dẫn di chuyển & Đỗ xe:</div>
+              <div id="detailDirections" style="font-size:var(--text-sm);color:var(--color-text);line-height:1.7;background:#fff;border:1px solid var(--color-border-light);border-radius:var(--radius-md);padding:var(--space-md);white-space:pre-line;"></div>
+            </div>
+          </div>
+
+          <!-- Included Services -->
+          <div class="services-section">
+            <h2 data-i18n="detail_includes"></h2>
+            <div id="servicesList"></div>
+          </div>
+
+          <!-- Reviews -->
+          <div class="reviews-section">
+            <h2 data-i18n="detail_reviews"></h2>
+            <div id="reviewsList"></div>
+          </div>
+        </div>
+
+        <!-- Booking Sidebar -->
+        <div class="booking-sidebar">
+          <div class="booking-card">
+            <div class="booking-price">
+              <span class="current" id="bookingPrice"></span>
+              <span class="original" id="bookingOriginal"></span>
+              <span class="discount" id="bookingDiscount"></span>
+            </div>
+
+            <div class="booking-divider"></div>
+
+            <div id="bookingBreakdown"></div>
+
+            <div class="booking-divider"></div>
+
+            <div class="booking-detail">
+              <span class="label" data-i18n="detail_total"></span>
+              <span class="booking-total" id="bookingTotal"></span>
+            </div>
+
+            <a id="bookNowBtn" class="btn btn-primary btn-lg" data-i18n="detail_book" style="cursor:pointer;"></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Packages -->
+      <div style="padding:var(--space-3xl) 0;">
+        <h2 class="section-title" data-i18n="detail_similar"></h2>
+        <div class="packages-grid" id="similarGrid" style="margin-top:var(--space-xl);"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('explore');
+
+    const pkgId = getUrlParam('id');
+    const pkg = getPackageById(pkgId);
+
+    if (!pkg) {
+      window.location.href = 'explore.html';
+    }
+
+    let currentGalleryIdx = 0;
+    let customServices = [...pkg.services];
+
+    function renderPage() {
+      const lang = getLang();
+      const name = lang === 'vi' ? pkg.name_vi : pkg.name_en;
+      const desc = lang === 'vi' ? pkg.description_vi : pkg.description_en;
+      const discount = Math.round((1 - pkg.price / pkg.originalPrice) * 100);
+
+      document.title = `${name} – Momently`;
+
+      // Gallery
+      renderGallery();
+
+      // Info
+      const eventObj = typeof eventTypes !== 'undefined' ? eventTypes.find(e => e.id === pkg.event) : null;
+      document.getElementById('detailEventBadge').textContent = (eventObj ? (lang === 'vi' ? eventObj.name_vi : eventObj.name_en) : '') || t('event_' + pkg.event) || (lang === 'vi' ? 'Sự kiện' : 'Event');
+      document.getElementById('detailStyleBadge').textContent = t('style_' + pkg.style);
+      document.getElementById('detailTitle').textContent = name;
+      document.getElementById('detailRating').textContent = pkg.rating;
+      document.getElementById('detailReviewCount').textContent = `(${pkg.reviewCount} ${t('detail_reviews')})`;
+      document.getElementById('detailGuests').textContent = `${pkg.maxGuests} ${t('common_guests')}`;
+      document.getElementById('detailServiceCount').textContent = `${customServices.length} ${t('common_services')}`;
+      document.getElementById('detailBooked').textContent = `${pkg.booked} ${t('featured_booked')}`;
+      document.getElementById('detailDescription').textContent = desc;
+
+      // Location & Directions Guide
+      const cityObj = typeof cities !== 'undefined' ? cities.find(c => c.id === pkg.city) : null;
+      const cityName = cityObj ? (lang === 'vi' ? cityObj.name_vi : cityObj.name_en) : '';
+      const distObj = cityObj && cityObj.districts ? cityObj.districts.find(d => d.id === pkg.district) : null;
+      const distName = distObj ? (lang === 'vi' ? distObj.name_vi : distObj.name_en) : '';
+      const hanoiTitle = lang === 'vi' ? 'Thủ đô Hà Nội' : 'Hanoi Capital';
+      const locTag = pkg.ward ? `${pkg.ward} • ${cityName || hanoiTitle}` : (distName ? `${distName} • ${cityName || hanoiTitle}` : hanoiTitle);
+      
+      document.getElementById('detailLocationTag').textContent = `📍 ${locTag}`;
+
+      document.getElementById('detailAddress').textContent = (lang === 'vi' ? pkg.address_vi : pkg.address_en) || pkg.address_vi || '';
+      document.getElementById('detailDirections').textContent = (lang === 'vi' ? pkg.directions_vi : pkg.directions_en) || pkg.directions_vi || '';
+      document.getElementById('detailMapLink').href = pkg.mapUrl || ('https://maps.google.com/?q=' + encodeURIComponent(pkg.address_vi || name));
+
+      // Services
+      renderServices();
+
+      // Booking sidebar
+      updateBookingSidebar();
+
+      // Reviews
+      renderReviews();
+
+      // Similar
+      renderSimilar();
+
+      // Apply i18n
+      setLang(getLang());
+    }
+
+    function renderGallery() {
+      document.getElementById('galleryImg').src = pkg.gallery[currentGalleryIdx];
+      document.getElementById('galleryImg').alt = getLang() === 'vi' ? pkg.name_vi : pkg.name_en;
+      document.getElementById('galleryDots').innerHTML = pkg.gallery.map((_, i) => 
+        `<span class="${i === currentGalleryIdx ? 'active' : ''}" onclick="goToSlide(${i})"></span>`
+      ).join('');
+    }
+
+    function galleryNext() {
+      currentGalleryIdx = (currentGalleryIdx + 1) % pkg.gallery.length;
+      renderGallery();
+    }
+
+    function galleryPrev() {
+      currentGalleryIdx = (currentGalleryIdx - 1 + pkg.gallery.length) % pkg.gallery.length;
+      renderGallery();
+    }
+
+    function goToSlide(i) {
+      currentGalleryIdx = i;
+      renderGallery();
+    }
+
+    function renderServices() {
+      const lang = getLang();
+      const container = document.getElementById('servicesList');
+      container.innerHTML = customServices.map((s, i) => {
+        const sType = serviceTypes.find(st => st.id === s.type);
+        const typeName = sType ? (lang === 'vi' ? sType.name_vi : sType.name_en) : s.type;
+        const sName = lang === 'vi' ? s.name_vi : s.name_en;
+        return `
+          <div class="service-item">
+            <div class="service-info">
+              <span class="service-icon">${sType ? sType.icon : '📦'}</span>
+              <div>
+                <div class="service-name">${sName}</div>
+                <div class="service-type">${typeName}</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:var(--space-md);">
+              <span class="service-price">${formatPrice(s.price)}</span>
+              <div class="service-actions">
+                <button onclick="removeService(${i})" data-i18n="detail_remove">${t('detail_remove')}</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function removeService(index) {
+      if (customServices.length <= 1) {
+        showToast(getLang() === 'vi' ? 'Gói sự kiện phải có ít nhất một dịch vụ' : 'Package must have at least one service', 'error');
+        return;
+      }
+      customServices.splice(index, 1);
+      renderServices();
+      updateBookingSidebar();
+    }
+
+    function updateBookingSidebar() {
+      const customTotal = customServices.reduce((sum, s) => sum + s.price, 0);
+      const originalTotal = pkg.services.reduce((sum, s) => sum + s.price, 0);
+      const saved = originalTotal - customTotal;
+      const discountPct = Math.round((saved / originalTotal) * 100);
+
+      document.getElementById('bookingPrice').textContent = formatPrice(customTotal);
+      document.getElementById('bookingOriginal').textContent = formatPrice(originalTotal);
+      document.getElementById('bookingDiscount').textContent = saved > 0 ? `-${discountPct}%` : '';
+      document.getElementById('bookingDiscount').style.display = saved > 0 ? 'inline' : 'none';
+
+      // Breakdown
+      document.getElementById('bookingBreakdown').innerHTML = customServices.map(s => {
+        const lang = getLang();
+        return `
+          <div class="booking-detail">
+            <span class="label">${lang === 'vi' ? s.name_vi : s.name_en}</span>
+            <span>${formatPrice(s.price)}</span>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('bookingTotal').textContent = formatPrice(customTotal);
+
+      // Book now button
+      document.getElementById('bookNowBtn').href = `checkout.html?id=${pkg.id}&total=${customTotal}`;
+      // Save customized services to sessionStorage for checkout
+      sessionStorage.setItem('momently_checkout', JSON.stringify({
+        package: pkg,
+        services: customServices,
+        total: customTotal
+      }));
+    }
+
+    function renderReviews() {
+      const lang = getLang();
+      const pkgReviews = getReviewsByPackage(pkg.id);
+      const container = document.getElementById('reviewsList');
+
+      if (pkgReviews.length === 0) {
+        container.innerHTML = `<p style="color:var(--color-text-light);padding:var(--space-lg) 0;">${lang === 'vi' ? 'Chưa có đánh giá nào cho gói này.' : 'No reviews yet for this package.'}</p>`;
+        return;
+      }
+
+      container.innerHTML = pkgReviews.map(r => {
+        const isForeign = r.isForeign || (r.origin_en && !r.origin_en.toLowerCase().includes('vietnam')) || (r.origin_vi && !r.origin_vi.toLowerCase().includes('việt nam'));
+        const comment = isForeign ? r.comment_en : (lang === 'vi' ? r.comment_vi : r.comment_en);
+        const originStr = (lang === 'vi' ? r.origin_vi : r.origin_en) || r.origin || '';
+        return `
+          <div class="review-item">
+            <div class="review-header">
+              <div class="review-avatar">${r.avatar}</div>
+              <div class="review-info">
+                <h4>${r.userName}</h4>
+                <div style="font-size:11px;color:var(--color-primary);font-weight:600;">${originStr}</div>
+                <span class="review-date">${new Date(r.date).toLocaleDateString(lang === 'vi' ? 'vi-VN' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              </div>
+              <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+            </div>
+            <p class="review-text">${comment}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSimilar() {
+      const similar = packages.filter(p => p.event === pkg.event && p.id !== pkg.id).slice(0, 3);
+      document.getElementById('similarGrid').innerHTML = similar.map(p => renderPackageCard(p)).join('');
+    }
+
+    renderPage();
+
+    function onLangChange() {
+      renderPage();
+    }
+    window.addEventListener('langchange', () => onLangChange());
+  </script>
+</body>
+</html>

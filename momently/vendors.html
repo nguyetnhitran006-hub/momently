@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Khám phá mạng lưới hơn 80+ đối tác uy tín tại Thủ đô Hà Nội của Momently: địa điểm, nhà hàng, hoa tươi, decor, chụp ảnh, âm nhạc, makeup và xe hoa.">
+  <title>Mạng Lưới Đối Tác & Địa Điểm Hà Nội – Momently Fairytale</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+  <style>
+    .vendors-hero {
+      padding-top: calc(var(--nav-height) + var(--space-2xl));
+      padding-bottom: var(--space-2xl);
+      text-align: center;
+      background: radial-gradient(circle at 50% 15%, rgba(2, 132, 199, 0.12) 0%, rgba(236, 72, 153, 0.1) 45%, rgba(248, 250, 252, 1) 85%);
+      position: relative;
+      overflow: hidden;
+    }
+    .vendors-hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .vendors-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(2, 132, 199, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Top Search & Filter Bar */
+    .top-search-section {
+      max-width: 960px;
+      margin: var(--space-lg) auto 0;
+      padding: 0 var(--space-md);
+      position: relative;
+      z-index: 5;
+    }
+    .top-search-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-md);
+      box-shadow: 0 16px 36px -10px rgba(2, 132, 199, 0.18), 0 8px 20px -6px rgba(236, 72, 153, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .top-search-row-1 {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .top-search-input-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 10px 16px;
+      transition: all var(--transition-fast);
+    }
+    .top-search-input-wrap:focus-within {
+      background: #fff;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+    .top-search-input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: var(--text-sm);
+      font-family: var(--font-body);
+      color: var(--color-text);
+      width: 100%;
+      margin-left: 8px;
+    }
+    .top-search-clear {
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 0 4px;
+    }
+    .top-search-clear:hover {
+      color: #ef4444;
+    }
+    .top-search-row-2 {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-filter-select {
+      flex: 1;
+      min-width: 160px;
+      background: #fff;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 9px 14px;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-secondary);
+      outline: none;
+      cursor: pointer;
+      transition: border-color var(--transition-fast);
+    }
+    .top-filter-select:focus {
+      border-color: var(--color-primary);
+    }
+    .results-count-badge {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-primary);
+      background: rgba(2, 132, 199, 0.08);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(2, 132, 199, 0.2);
+    }
+
+    /* Category Filter Tabs */
+    .vendor-filter-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: var(--space-lg);
+      position: relative;
+      z-index: 2;
+    }
+    .vendor-filter-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .vendor-filter-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+    .vendor-filter-btn.active {
+      background: var(--gradient-primary);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    /* Vendor Card Styling */
+    .vendor-card {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      border: 1.5px solid rgba(226, 232, 240, 0.9);
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition-normal);
+      position: relative;
+    }
+    .vendor-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px -6px rgba(2, 132, 199, 0.18), 0 8px 18px -4px rgba(236, 72, 153, 0.14);
+      border-color: rgba(56, 189, 248, 0.6);
+    }
+    .vendor-thumb-wrap {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background: #f1f5f9;
+    }
+    .vendor-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+    .vendor-card:hover .vendor-thumb-wrap img {
+      transform: scale(1.06);
+    }
+    .vendor-cat-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      color: var(--color-primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .vendor-map-btn-overlay {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      color: #0284c7;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all var(--transition-fast);
+    }
+    .vendor-map-btn-overlay:hover {
+      background: #0284c7;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .vendor-body {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .vendor-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .vendor-body h3 {
+      font-size: var(--text-lg);
+      color: var(--color-secondary);
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 0;
+    }
+    .vendor-loc {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vendor-address-line {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      margin-bottom: 10px;
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .vendor-price-pill {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(236, 72, 153, 0.08) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: var(--radius-md);
+      padding: 7px 12px;
+      margin-bottom: 10px;
+      font-size: var(--text-xs);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .vendor-price-pill strong {
+      color: var(--color-accent);
+      font-size: 13px;
+    }
+    .vendor-desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+      flex: 1;
+    }
+    .vendor-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--color-border-light);
+      padding-top: var(--space-sm);
+      margin-bottom: var(--space-md);
+      font-size: var(--text-xs);
+    }
+
+    /* Subactions Grid: 4 buttons */
+    .vendor-subactions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+    .btn-subaction {
+      background: #f8fafc;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 7px 10px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--color-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn-subaction:hover {
+      background: rgba(2, 132, 199, 0.08);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+    .btn-subaction.highlight-pricing {
+      background: rgba(236, 72, 153, 0.08);
+      border-color: rgba(236, 72, 153, 0.3);
+      color: #ec4899;
+    }
+    .btn-subaction.highlight-pricing:hover {
+      background: #ec4899;
+      color: #fff;
+    }
+    .btn-subaction.highlight-map {
+      background: rgba(2, 132, 199, 0.08);
+      border-color: rgba(2, 132, 199, 0.3);
+      color: #0284c7;
+    }
+    .btn-subaction.highlight-map:hover {
+      background: #0284c7;
+      color: #fff;
+    }
+    .vendor-main-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    /* Modals & Dialogs */
+    .pricing-table-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: var(--space-md);
+    }
+    .tier-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      background: #fff;
+      transition: all var(--transition-fast);
+    }
+    .tier-card:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .tier-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .tier-name {
+      font-weight: 700;
+      color: var(--color-secondary);
+      font-size: var(--text-sm);
+    }
+    .tier-price {
+      font-weight: 700;
+      color: var(--color-accent);
+      font-size: var(--text-base);
+    }
+    .tier-desc {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+    .location-photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .location-photo-item img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .portfolio-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+    }
+
+    /* Contact Organizer Modal */
+    .contact-modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    @media (max-width: 680px) {
+      .contact-modal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .contact-quick-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .contact-channel-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--color-border);
+      background: #fff;
+      text-decoration: none;
+      color: var(--color-secondary);
+      transition: all var(--transition-fast);
+    }
+    .contact-channel-btn:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-channel-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .reviews-container {
+      max-height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .review-item-card {
+      background: #f8fafc;
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar"></header>
+
+  <!-- Hero Section with Top Location Search -->
+  <section class="vendors-hero">
+    <div class="container">
+      <div class="fairytale-badge" style="margin-bottom:12px;" data-i18n="vendors_hero_badge">
+        ✨ MẠNG LƯỚI ĐỐI TÁC & ĐỊA ĐIỂM THỦ ĐÔ HÀ NỘI ✨
+      </div>
+      <h1 class="section-title text-gradient fairytale-title" data-i18n="vendors_hero_title">Địa Điểm & Đối Tác Sự Kiện Hà Nội</h1>
+      <p class="section-subtitle" data-i18n="vendors_hero_subtitle">Tuyển chọn các địa điểm 5 sao, rooftop lãng mạn, nhà hàng biệt thự Pháp và đối tác uy tín nhất tại Hà Nội</p>
+
+      <!-- Top Search & Ward Filter Bar -->
+      <div class="top-search-section">
+        <div class="top-search-wrapper">
+          <div class="top-search-row-1">
+            <div class="top-search-input-wrap">
+              <span style="font-size:18px;">🔍</span>
+              <input type="text" id="vendorSearchInput" class="top-search-input" 
+                     data-i18n-placeholder="vendors_search_placeholder"
+                     placeholder="Tìm kiếm địa điểm, nhà hàng, rooftop, quận hoặc phường (VD: Ba Đình, Hoàn Kiếm, Cầu Giấy, Tây Hồ...)"
+                     oninput="onVendorSearch(this.value)">
+              <button type="button" class="top-search-clear" onclick="clearVendorSearch()" title="Xóa tìm kiếm">×</button>
+            </div>
+          </div>
+          <div class="top-search-row-2">
+            <select id="wardFilterSelect" class="top-filter-select" onchange="onWardChange(this.value)" style="flex:2;">
+              <option value="all" data-i18n="vendors_all_wards_option">🏘️ Tất cả các Phường (sau sáp nhập tại Hà Nội)</option>
+            </select>
+            <div class="results-count-badge" id="resultsCountBadge">
+              Hiển thị: 0 đối tác
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Category Filter Tabs -->
+      <div class="vendor-filter-bar" id="vendorCategories">
+        <button class="vendor-filter-btn active" data-cat="all" onclick="filterVendorsByCategory('all')" data-i18n="cat_all">✨ Tất cả</button>
+        <button class="vendor-filter-btn" data-cat="venue" onclick="filterVendorsByCategory('venue')" data-i18n="cat_venue">🏠 Địa điểm & Ẩm thực</button>
+        <button class="vendor-filter-btn" data-cat="flowers" onclick="filterVendorsByCategory('flowers')" data-i18n="cat_flowers">💐 Hoa & Quà tặng</button>
+        <button class="vendor-filter-btn" data-cat="decor" onclick="filterVendorsByCategory('decor')" data-i18n="cat_decor">🎨 Trang trí sự kiện</button>
+        <button class="vendor-filter-btn" data-cat="photo" onclick="filterVendorsByCategory('photo')" data-i18n="cat_photo">📷 Quay & Chụp ảnh</button>
+        <button class="vendor-filter-btn" data-cat="music" onclick="filterVendorsByCategory('music')" data-i18n="cat_music">🎵 Âm nhạc & MC</button>
+        <button class="vendor-filter-btn" data-cat="cake" onclick="filterVendorsByCategory('cake')" data-i18n="cat_cake">🎂 Bánh ngọt & Tiệc</button>
+        <button class="vendor-filter-btn" data-cat="fashion" onclick="filterVendorsByCategory('fashion')" data-i18n="cat_fashion">👗 Thời trang & Vest</button>
+        <button class="vendor-filter-btn" data-cat="beauty" onclick="filterVendorsByCategory('beauty')" data-i18n="cat_beauty">💄 Makeup & Beauty</button>
+        <button class="vendor-filter-btn" data-cat="stationery" onclick="filterVendorsByCategory('stationery')" data-i18n="cat_stationery">💌 Thiệp & In ấn</button>
+        <button class="vendor-filter-btn" data-cat="transport" onclick="filterVendorsByCategory('transport')" data-i18n="cat_transport">🚗 Xe hoa & Vận chuyển</button>
+        <button class="vendor-filter-btn" data-cat="equipment" onclick="filterVendorsByCategory('equipment')" data-i18n="cat_equipment">🎪 Thuê thiết bị</button>
+        <button class="vendor-filter-btn" data-cat="planner" onclick="filterVendorsByCategory('planner')" data-i18n="cat_planner">👑 Wedding & Planner</button>
+        <button class="vendor-filter-btn" data-cat="experience" onclick="filterVendorsByCategory('experience')" data-i18n="cat_experience">🏕️ Trải nghiệm & Camping</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vendor Grid Section -->
+  <section class="section" style="padding-top:var(--space-xl);">
+    <div class="container">
+      <div id="noVendors" style="display:none;text-align:center;padding:var(--space-3xl) 0;">
+        <span style="font-size:48px;">🔍</span>
+        <h3 style="margin-top:var(--space-md);color:var(--color-secondary);" data-i18n="vendors_no_results">Không tìm thấy đối tác phù hợp</h3>
+        <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-top:4px;" data-i18n="vendors_no_results">
+          Hãy thử đổi từ khóa tìm kiếm hoặc chọn lại quận, phường khác.
+        </p>
+        <button class="btn btn-outline" style="margin-top:var(--space-md);" onclick="resetAllFilters()" data-i18n="vendors_reset_filters">
+          🔄 Đặt lại bộ lọc
+        </button>
+      </div>
+
+      <div class="grid grid-3" id="vendorsGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Pagination Controls (20 vendors per page) -->
+      <div class="pagination-wrapper" id="vendorsPagination" style="display:none;">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal 1: Bảng giá chi phí đa dạng (Pricing Table) -->
+  <div class="modal-overlay" id="pricingModal" onclick="closePricingModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:680px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="pricingModalVendorName" style="color:var(--color-primary);font-size:var(--text-xl);"></h3>
+          <p data-i18n="modal_pricing_subtitle" style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px;">Bảng giá chi phí đa dạng theo từng phân khúc dịch vụ</p>
+        </div>
+        <span class="modal-close" onclick="closePricingModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="pricing-table-container" id="pricingModalList"></div>
+        <div data-i18n-html="modal_pricing_commit" style="margin-top:var(--space-lg);padding:12px;background:rgba(2,132,199,0.06);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);">
+          💡 <strong>Cam kết từ Momently:</strong> Mọi mức giá đều minh bạch, không phí ẩn. Hỗ trợ tư vấn và đặt lịch trực tiếp qua hotline: <strong>0859062212</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Địa chỉ, Ảnh địa điểm & Hướng dẫn di chuyển -->
+  <div class="modal-overlay" id="locationModal" onclick="closeLocationModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:760px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="locationModalVendorName" style="color:var(--color-primary);font-size:var(--text-xl);"></h3>
+          <p data-i18n="directions_modal_subtitle" style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px;">Địa chỉ chi tiết, bản đồ Google Maps và hướng dẫn cách di chuyển</p>
+        </div>
+        <span class="modal-close" onclick="closeLocationModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--color-bg-alt);border:1.5px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-md);margin-bottom:var(--space-lg);">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px;">
+            <div>
+              <div data-i18n="directions_address" style="font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;margin-bottom:4px;">Địa chỉ cụ thể:</div>
+              <div id="locationModalAddress" style="font-size:var(--text-sm);font-weight:600;color:var(--color-secondary);"></div>
+            </div>
+            <a id="locationModalMapLink" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-pink-blue" data-i18n="directions_open_map">
+              🗺️ Mở trên Google Maps
+            </a>
+          </div>
+          <div style="border-top:1px dashed var(--color-border-light);padding-top:10px;">
+            <div data-i18n="directions_transport" style="font-size:var(--text-xs);font-weight:700;color:var(--color-primary);text-transform:uppercase;margin-bottom:4px;">Hướng dẫn di chuyển & Đỗ xe:</div>
+            <div id="locationModalDirections" style="font-size:var(--text-xs);color:var(--color-text);line-height:1.6;white-space:pre-line;"></div>
+          </div>
+        </div>
+
+        <div data-i18n="modal_space_portfolio" style="font-size:var(--text-xs);font-weight:700;color:var(--color-secondary);text-transform:uppercase;margin-bottom:10px;">
+          📸 Không gian & Portfolio địa điểm
+        </div>
+        <div class="location-photos-grid" id="locationPhotosGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Đánh giá khách hàng -->
+  <div class="modal-overlay" id="reviewsModal" onclick="closeReviewsModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:760px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="reviewsModalVendorName" style="color:var(--color-primary);font-size:var(--text-xl);"></h3>
+          <p data-i18n="modal_reviews_subtitle" style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px;">Trải nghiệm thực tế từ các cặp đôi và khách hàng đã trải nghiệm</p>
+        </div>
+        <span class="modal-close" onclick="closeReviewsModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <!-- Review Summary & Actions -->
+        <div class="review-summary-box" id="reviewsSummaryBox">
+          <div>
+            <div style="font-size:22px;font-weight:700;color:var(--color-secondary);display:flex;align-items:center;gap:6px;">
+              <span id="reviewsModalScore">4.9</span>
+              <span style="color:#0284c7;font-size:16px;">★★★★★</span>
+            </div>
+            <div id="reviewsModalCountSubtitle" style="font-size:12px;color:var(--color-text-muted);margin-top:2px;">
+              100% đánh giá đã xác thực từ khách hàng qua Momently
+            </div>
+          </div>
+          <button type="button" class="add-review-toggle-btn" id="btnToggleAddReview" onclick="toggleAddReviewBox()">
+            ✍️ Viết đánh giá của bạn
+          </button>
+        </div>
+
+        <!-- Add Review Form Box (Collapsible) -->
+        <div class="add-review-form-box" id="addReviewFormBox">
+          <form onsubmit="handleNewVendorReview(event)">
+            <h4 style="font-size:14px;margin-bottom:10px;color:var(--color-primary);" id="lblAddReviewTitle">Viết đánh giá cho đối tác</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <input type="text" id="newRevName" class="form-input" placeholder="Họ và tên của bạn..." required>
+              <input type="text" id="newRevOrigin" class="form-input" placeholder="Quốc gia / Thành phố (VD: Hà Nội 🇻🇳, Paris 🇫🇷)..." required>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <select id="newRevRating" class="form-input">
+                <option value="5">★★★★★ Tuyệt vời (5.0/5.0)</option>
+                <option value="4">★★★★☆ Rất tốt (4.0/5.0)</option>
+                <option value="3">★★★☆☆ Bình thường (3.0/5.0)</option>
+              </select>
+              <input type="text" id="newRevEvent" class="form-input" placeholder="Loại sự kiện (VD: Tiệc kỷ niệm, Cầu hôn)...">
+            </div>
+            <textarea id="newRevComment" class="form-input" rows="3" placeholder="Chia sẻ cảm nhận chi tiết về dịch vụ..." required style="margin-bottom:10px;"></textarea>
+            <div style="display:flex;justify-content:flex-end;gap:8px;">
+              <button type="button" class="btn btn-sm btn-outline" onclick="toggleAddReviewBox(false)">Hủy</button>
+              <button type="submit" class="btn btn-sm btn-primary">Gửi đánh giá</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="reviews-container" id="reviewsModalList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Liên hệ Ban Tổ Chức (Hotline 0859062212, Email nhitdnf14.38ftu@gmail.com) -->
+  <div class="modal-overlay" id="contactModal" onclick="closeContactModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:780px;">
+      <div class="modal-header">
+        <div>
+          <h3 data-i18n="modal_contact_title" style="color:var(--color-primary);font-size:var(--text-xl);">Liên Hệ Đội Ngũ Momently</h3>
+          <p data-i18n="modal_contact_subtitle" style="font-size:var(--text-xs);color:var(--color-text-muted);margin-top:2px;">Tư vấn địa điểm, khảo sát thực tế và thiết kế sự kiện trọn gói</p>
+        </div>
+        <span class="modal-close" onclick="closeContactModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="contact-modal-grid">
+          <div class="contact-quick-cards">
+            <a href="tel:0859062212" class="contact-channel-btn">
+              <div class="contact-channel-icon" style="background:rgba(2, 132, 199, 0.12);color:#0284C7;">📞</div>
+              <div>
+                <div data-i18n="modal_contact_hotline" style="font-size:var(--text-xs);color:var(--color-text-muted);">Hotline tư vấn 24/7</div>
+                <div style="font-size:var(--text-base);font-weight:700;color:#0284C7;">0859062212</div>
+              </div>
+            </a>
+            <a href="https://zalo.me/0859062212" target="_blank" rel="noopener" class="contact-channel-btn">
+              <div class="contact-channel-icon" style="background:rgba(0, 104, 255, 0.12);color:#0068FF;">💬</div>
+              <div>
+                <div data-i18n="modal_contact_zalo" style="font-size:var(--text-xs);color:var(--color-text-muted);">Tư vấn trực tiếp qua Zalo</div>
+                <div style="font-size:var(--text-base);font-weight:700;color:#0068FF;">Zalo: 0859062212</div>
+              </div>
+            </a>
+            <a href="mailto:nhitdnf14.38ftu@gmail.com" class="contact-channel-btn">
+              <div class="contact-channel-icon" style="background:rgba(236, 72, 153, 0.12);color:#EC4899;">✉️</div>
+              <div>
+                <div data-i18n="modal_contact_email" style="font-size:var(--text-xs);color:var(--color-text-muted);">Email Ban Tổ Chức</div>
+                <div style="font-size:var(--text-sm);font-weight:700;color:#EC4899;">nhitdnf14.38ftu@gmail.com</div>
+              </div>
+            </a>
+            <div data-i18n-html="modal_contact_hours_addr" style="padding:12px;background:var(--color-bg-alt);border-radius:var(--radius-md);font-size:var(--text-xs);color:var(--color-text-muted);line-height:1.5;">
+              ⏰ <strong>Thời gian hỗ trợ:</strong> 08:00 – 22:30 (Thứ 2 – Chủ nhật)<br>
+              📍 <strong>Trụ sở:</strong> Thủ đô Hà Nội, Việt Nam
+            </div>
+          </div>
+
+          <div style="background:var(--color-bg-card);border:1px solid var(--color-border);padding:var(--space-lg);border-radius:var(--radius-lg);">
+            <h4 data-i18n="modal_contact_form_title" style="font-size:var(--text-sm);margin-bottom:var(--space-md);color:var(--color-secondary);">Gửi Yêu Cầu Tư Vấn Nhanh</h4>
+            <form onsubmit="handleContactSubmit(event)">
+              <div class="form-group" style="margin-bottom:10px;">
+                <input type="text" id="ctName" class="form-input" data-i18n-placeholder="modal_contact_form_name" placeholder="Họ và tên của bạn" required>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <input type="tel" id="ctPhone" class="form-input" data-i18n-placeholder="modal_contact_form_phone" placeholder="Số điện thoại / Zalo" required>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <input type="date" id="ctDate" class="form-input">
+              </div>
+              <div class="form-group" style="margin-bottom:12px;">
+                <textarea id="ctNotes" class="form-input" rows="2" data-i18n-placeholder="modal_contact_form_notes" placeholder="Nhu cầu hoặc địa điểm bạn đang quan tâm..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-pink-blue" style="width:100%;" data-i18n="modal_contact_form_submit">
+                🚀 Gửi yêu cầu tới Ban Tổ Chức
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Portfolio Preview Modal -->
+  <div class="modal-overlay" id="portfolioModal" onclick="closePortfolioModal(event)">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:720px;">
+      <div class="modal-header">
+        <h3 id="modalVendorTitle" data-i18n="modal_portfolio_title" style="color:var(--color-primary);font-size:var(--text-xl);">Portfolio Địa Điểm</h3>
+        <span class="modal-close" onclick="closePortfolioModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p id="modalVendorDesc" style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-md);"></p>
+        <div class="portfolio-grid" id="modalPortfolioGrid"></div>
+        <div style="margin-top:var(--space-xl);display:flex;justify-content:flex-end;gap:10px;">
+          <button class="btn btn-secondary" onclick="closePortfolioModal()" data-i18n="common_close">Đóng</button>
+          <a id="modalPortfolioMapsLink" href="#" target="_blank" rel="noopener" class="btn btn-pink-blue" data-i18n="directions_open_map">
+            🗺️ Mở Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer" id="footer"></footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="js/hanoi_locations.js"></script>
+  <script src="js/hanoi_vendors.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/vendor_reviews.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    initApp('vendors');
+
+    let currentCategory = 'all';
+    let currentDistrict = 'all';
+    let currentWard = 'all';
+    let vendorSearchQuery = '';
+    let activeVendorId = null;
+    let currentPage = 1;
+    const VENDORS_PER_PAGE = 20;
+
+    function getVendors() {
+      if (typeof hanoiVendors !== 'undefined' && Array.isArray(hanoiVendors) && hanoiVendors.length > 0) {
+        return hanoiVendors;
+      }
+      return (typeof vendors !== 'undefined' && Array.isArray(vendors)) ? vendors : [];
+    }
+
+    // Populate Post-Merger Ward filter (Exclusive Hanoi)
+    function initFilters() {
+      populateWards();
+    }
+
+    function populateWards() {
+      const wardSelect = document.getElementById('wardFilterSelect');
+      if (!wardSelect) return;
+      const lang = getLang();
+
+      const allWards = typeof getAllHanoiWardsFlat === 'function' ? getAllHanoiWardsFlat() : [];
+      wardSelect.innerHTML = `<option value="all">🏘️ ${lang === 'vi' ? 'Tất cả các Phường (sau sáp nhập tại Hà Nội)' : 'All Wards (Post-merger in Hanoi)'}</option>` +
+        allWards.map(w => {
+          const wName = (lang === 'vi' ? w.name_vi : w.name_en) || w.name_vi;
+          return `<option value="${w.name_vi}">${wName}</option>`;
+        }).join('');
+      wardSelect.value = 'all';
+      currentWard = 'all';
+    }
+
+    function onWardChange(wardName) {
+      currentWard = wardName;
+      currentPage = 1;
+      renderVendors();
+    }
+
+    function onVendorSearch(val) {
+      vendorSearchQuery = val.toLowerCase().trim();
+      currentPage = 1;
+      renderVendors();
+    }
+
+    function clearVendorSearch() {
+      const inp = document.getElementById('vendorSearchInput');
+      if (inp) inp.value = '';
+      vendorSearchQuery = '';
+      currentPage = 1;
+      renderVendors();
+    }
+
+    function filterVendorsByCategory(cat) {
+      currentCategory = cat;
+      currentPage = 1;
+      document.querySelectorAll('.vendor-filter-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-cat') === cat);
+      });
+      renderVendors();
+    }
+
+    function resetAllFilters() {
+      currentCategory = 'all';
+      currentWard = 'all';
+      vendorSearchQuery = '';
+      currentPage = 1;
+      const sInp = document.getElementById('vendorSearchInput');
+      if (sInp) sInp.value = '';
+      const wSel = document.getElementById('wardFilterSelect');
+      if (wSel) wSel.value = 'all';
+      document.querySelectorAll('.vendor-filter-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
+      });
+      renderVendors();
+    }
+
+    function renderVendors() {
+      const lang = getLang();
+      let list = [];
+
+      // Ward filter - guaranteed results using local matches + city-wide event partners
+      if (currentWard && currentWard !== 'all') {
+        list = typeof getVendorsForWard === 'function' ? getVendorsForWard(currentWard) : getVendors();
+      } else {
+        list = getVendors();
+      }
+
+      // Category filter
+      if (currentCategory !== 'all') {
+        list = list.filter(v => v.category === currentCategory);
+      }
+
+      // Query filter - Diacritics-insensitive & Keyword-aware matching
+      if (vendorSearchQuery) {
+        const qRaw = vendorSearchQuery.toLowerCase();
+        const qNoTone = typeof removeVietnameseTones === 'function' ? removeVietnameseTones(vendorSearchQuery) : qRaw;
+        const qKeywords = typeof extractWardKeywords === 'function' ? extractWardKeywords(vendorSearchQuery) : [vendorSearchQuery];
+
+        list = list.filter(v => {
+          const nVi = (v.name || '').toLowerCase();
+          const nEn = (v.name_en || '').toLowerCase();
+          const dVi = (v.description_vi || '').toLowerCase();
+          const dEn = (v.description_en || '').toLowerCase();
+          const aVi = (v.address_vi || '').toLowerCase();
+          const aEn = (v.address_en || '').toLowerCase();
+          const wVi = (v.ward_vi || '').toLowerCase();
+          const wEn = (v.ward_en || '').toLowerCase();
+          const distVi = (v.district_vi || '').toLowerCase();
+          const distEn = (v.district_en || '').toLowerCase();
+          const catVi = (v.category_vi || '').toLowerCase();
+          const catEn = (v.category_en || '').toLowerCase();
+
+          const fullVi = `${nVi} ${dVi} ${aVi} ${wVi} ${distVi} ${catVi}`;
+          const fullEn = `${nEn} ${dEn} ${aEn} ${wEn} ${distEn} ${catEn}`;
+          const fullNoTone = typeof removeVietnameseTones === 'function' ? removeVietnameseTones(`${fullVi} ${fullEn}`) : `${fullVi} ${fullEn}`;
+
+          const directMatch = fullVi.includes(qRaw) || fullEn.includes(qRaw) || fullNoTone.includes(qNoTone);
+          if (directMatch) return true;
+
+          return qKeywords.some(kw => {
+            const kwLower = kw.toLowerCase();
+            const kwNoTone = typeof removeVietnameseTones === 'function' ? removeVietnameseTones(kw) : kwLower;
+            return fullVi.includes(kwLower) || fullEn.includes(kwLower) || fullNoTone.includes(kwNoTone);
+          });
+        });
+      }
+
+      // Pagination calculations (20 vendors per page)
+      const totalPages = Math.ceil(list.length / VENDORS_PER_PAGE) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * VENDORS_PER_PAGE;
+      const endIndex = Math.min(startIndex + VENDORS_PER_PAGE, list.length);
+      const pageList = list.slice(startIndex, endIndex);
+
+      const grid = document.getElementById('vendorsGrid');
+      const noRes = document.getElementById('noVendors');
+      const countBadge = document.getElementById('resultsCountBadge');
+      const pagWrap = document.getElementById('vendorsPagination');
+
+      if (countBadge) {
+        if (list.length === 0) {
+          countBadge.textContent = lang === 'vi' ? 'Hiển thị: 0 đối tác' : 'Showing: 0 partners';
+        } else {
+          countBadge.textContent = lang === 'vi' 
+            ? `Hiển thị: ${startIndex + 1}–${endIndex} / ${list.length} đối tác Hà Nội (Trang ${currentPage}/${totalPages})`
+            : `Showing: ${startIndex + 1}–${endIndex} of ${list.length} partners in Hanoi (Page ${currentPage}/${totalPages})`;
+        }
+      }
+
+      if (!grid) return;
+
+      if (list.length === 0) {
+        grid.style.display = 'none';
+        if (noRes) noRes.style.display = 'block';
+        if (pagWrap) pagWrap.style.display = 'none';
+        return;
+      }
+
+      grid.style.display = 'grid';
+      if (noRes) noRes.style.display = 'none';
+
+      grid.innerHTML = pageList.map(v => {
+        const displayName = (lang === 'en' && v.name_en) ? v.name_en : v.name;
+        const desc = (lang === 'vi' ? v.description_vi : v.description_en) || v.description_vi || '';
+        let loc = (lang === 'vi' ? v.location_vi : v.location_en) || v.location_vi || (lang === 'vi' ? 'Thủ đô Hà Nội' : 'Hanoi Capital');
+        loc = loc.replace(/undefined/gi, lang === 'vi' ? 'Hà Nội' : 'Hanoi').trim();
+        let addr = (lang === 'vi' ? v.address_vi : v.address_en) || v.address_vi || (lang === 'vi' ? 'Hà Nội' : 'Hanoi');
+        addr = addr.replace(/undefined/gi, lang === 'vi' ? 'Hà Nội' : 'Hanoi').trim();
+        const priceLabel = (lang === 'vi' ? v.priceRange_vi : v.priceRange_en) || v.priceRange_vi || (lang === 'vi' ? 'Liên hệ tư vấn' : 'Contact for pricing');
+        const sType = serviceTypes.find(st => st.id === v.category);
+        const catName = (lang === 'en' && v.category_en) ? v.category_en : (v.category_vi || (sType ? (lang === 'vi' ? sType.name_vi : sType.name_en) : (lang === 'vi' ? 'Dịch vụ sự kiện' : 'Event Service')));
+        const mapUrl = v.mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(v.name + ' Hanoi')}`;
+
+        return `
+          <div class="vendor-card">
+            <!-- Thumbnail & Direct Map Overlay -->
+            <div class="vendor-thumb-wrap">
+              <img src="${v.image || 'https://images.unsplash.com/photo-1519741497674-611481863552?w=500'}" alt="${displayName}" loading="lazy">
+              <span class="vendor-cat-badge">${sType ? sType.icon : '✨'} ${catName}</span>
+              <a href="${mapUrl}" target="_blank" rel="noopener" class="vendor-map-btn-overlay" title="${lang === 'vi' ? 'Mở địa điểm trên Google Maps' : 'Open venue on Google Maps'}">
+                🗺️ Maps
+              </a>
+            </div>
+            
+            <div class="vendor-body">
+              <div class="vendor-title-row">
+                <h3>${displayName}</h3>
+              </div>
+              <div class="vendor-loc">📍 ${loc}</div>
+              <div class="vendor-address-line">
+                📌 ${addr}
+              </div>
+
+              <!-- Price Range Pill -->
+              <div class="vendor-price-pill">
+                <span>🏷️ ${lang === 'vi' ? 'Khoảng giá:' : 'Price range:'}</span>
+                <strong>${priceLabel}</strong>
+              </div>
+
+              <p class="vendor-desc">${desc}</p>
+              
+              <div class="vendor-meta-row">
+                <div>
+                  <span style="color:#0284C7;font-weight:700;">★ ${v.rating || 4.7}</span>
+                  <span style="color:var(--color-text-muted);">(${v.reviewCount || 500} ${lang === 'vi' ? 'đánh giá' : 'reviews'})</span>
+                </div>
+                <div style="color:var(--color-text-muted);">
+                  ${v.projectCount || 300}+ ${lang === 'vi' ? 'dự án thành công' : 'successful events'}
+                </div>
+              </div>
+
+              <!-- Subactions Grid: 4 Diverse Buttons -->
+              <div class="vendor-subactions-grid">
+                <button class="btn-subaction highlight-pricing" onclick="openPricingModal('${v.id}')">
+                  💰 ${lang === 'vi' ? 'Bảng giá chi phí' : 'Pricing Tiers'}
+                </button>
+                <button class="btn-subaction" onclick="openLocationPhotosModal('${v.id}')">
+                  📍 ${lang === 'vi' ? 'Địa chỉ & Đường đi' : 'Address & Spaces'}
+                </button>
+                <button class="btn-subaction" onclick="openReviewsModal('${v.id}')">
+                  ⭐ ${lang === 'vi' ? 'Đánh giá' : 'Reviews'} (${v.rating || 4.7})
+                </button>
+                <a href="${mapUrl}" target="_blank" rel="noopener" class="btn-subaction highlight-map">
+                  🗺️ ${lang === 'vi' ? 'Mở Google Maps' : 'Google Maps'}
+                </a>
+              </div>
+
+              <!-- Main Bottom Action Row -->
+              <div class="vendor-main-actions">
+                <button class="btn btn-sm btn-outline" style="flex:1;" onclick="openPortfolioModal('${v.id}')">
+                  🖼️ ${lang === 'vi' ? 'Portfolio' : 'Portfolio'}
+                </button>
+                <button class="btn btn-sm btn-pink-blue" style="flex:1;" onclick="openContactModal('${v.id}')">
+                  💬 ${lang === 'vi' ? 'Liên hệ tư vấn' : 'Contact Organizer'}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderPagination(totalPages, list.length);
+    }
+
+    function renderPagination(totalPages, totalItems) {
+      const pagWrap = document.getElementById('vendorsPagination');
+      if (!pagWrap) return;
+
+      if (totalItems <= VENDORS_PER_PAGE || totalPages <= 1) {
+        pagWrap.style.display = 'none';
+        pagWrap.innerHTML = '';
+        return;
+      }
+
+      pagWrap.style.display = 'flex';
+      const lang = getLang();
+      const prevLabel = lang === 'vi' ? '← Trước' : '← Prev';
+      const nextLabel = lang === 'vi' ? 'Sau →' : 'Next →';
+
+      let html = '';
+
+      // Prev Button
+      html += `<button type="button" class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToVendorPage(${currentPage - 1})">${prevLabel}</button>`;
+
+      // Page numbers array
+      const pages = [];
+      if (totalPages <= 7) {
+        for (let i = 1; i <= totalPages; i++) pages.push(i);
+      } else {
+        pages.push(1);
+        if (currentPage > 3) pages.push('...');
+        const start = Math.max(2, currentPage - 1);
+        const end = Math.min(totalPages - 1, currentPage + 1);
+        for (let i = start; i <= end; i++) {
+          if (!pages.includes(i)) pages.push(i);
+        }
+        if (currentPage < totalPages - 2) pages.push('...');
+        if (!pages.includes(totalPages)) pages.push(totalPages);
+      }
+
+      pages.forEach(p => {
+        if (p === '...') {
+          html += `<span class="pagination-ellipsis">…</span>`;
+        } else {
+          const isActive = p === currentPage;
+          html += `<button type="button" class="pagination-btn ${isActive ? 'active' : ''}" ${isActive ? 'disabled' : ''} onclick="goToVendorPage(${p})">${p}</button>`;
+        }
+      });
+
+      // Next Button
+      html += `<button type="button" class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goToVendorPage(${currentPage + 1})">${nextLabel}</button>`;
+
+      // Bottom info text
+      const infoText = lang === 'vi'
+        ? `Trang ${currentPage} / ${totalPages} • Mỗi trang hiển thị 20 đối tác uy tín`
+        : `Page ${currentPage} of ${totalPages} • 20 partners displayed per page`;
+      html += `<div class="pagination-info">${infoText}</div>`;
+
+      pagWrap.innerHTML = html;
+    }
+
+    function goToVendorPage(p) {
+      currentPage = p;
+      renderVendors();
+      const target = document.getElementById('vendorsGrid');
+      if (target) {
+        const yOffset = -90;
+        const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      }
+    }
+
+    // Modal 1: Pricing Table
+    function openPricingModal(vendorId) {
+      activeVendorId = vendorId;
+      const v = getVendorById(vendorId);
+      if (!v) return;
+      const lang = getLang();
+      const vName = (lang === 'en' && v.name_en) ? v.name_en : v.name;
+
+      document.getElementById('pricingModalVendorName').textContent = lang === 'vi' 
+        ? `${v.name} – Bảng Giá Chi Phí` 
+        : `${vName} – Pricing & Packages`;
+      
+      const tiers = v.pricingTable || [
+        { name_vi: 'Gói Tiêu Chuẩn', name_en: 'Standard Tier', price: 1500000, desc_vi: 'Dịch vụ tiêu chuẩn chất lượng cao kèm cam kết uy tín từ Momently', desc_en: 'High quality essential service backed by Momently guarantee' },
+        { name_vi: 'Gói Nâng Cao', name_en: 'Premium Tier', price: 3500000, desc_vi: 'Dịch vụ cao cấp trọn gói nâng cấp thiết bị và phong cách riêng biệt', desc_en: 'Premium bespoke upgrade with tailored design' }
+      ];
+
+      document.getElementById('pricingModalList').innerHTML = tiers.map((tier, idx) => {
+        const tierName = lang === 'vi' ? (tier.name_vi || tier.name_en) : (tier.name_en || tier.name_vi);
+        const tierDesc = lang === 'vi' ? (tier.desc_vi || tier.desc_en) : (tier.desc_en || tier.desc_vi);
+        const tierPriceStr = formatPrice(tier.price);
+
+        return `
+          <div class="tier-card">
+            <div class="tier-card-header">
+              <span class="tier-name">${idx + 1}. ${tierName}</span>
+              <span class="tier-price">${tierPriceStr}</span>
+            </div>
+            <div class="tier-desc">✨ ${tierDesc}</div>
+            <div style="margin-top:8px;display:flex;justify-content:flex-end;gap:8px;">
+              <button class="btn btn-sm btn-pink" onclick="closePricingModal(); openContactModal('${v.id}');">
+                📞 ${lang === 'vi' ? 'Nhận tư vấn gói này' : 'Inquire About This Tier'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('pricingModal').classList.add('active');
+    }
+
+    function closePricingModal(e) {
+      if (e && e.target && e.target !== document.getElementById('pricingModal')) return;
+      document.getElementById('pricingModal').classList.remove('active');
+    }
+
+    // Modal 2: Location & Directions
+    function openLocationPhotosModal(vendorId) {
+      activeVendorId = vendorId;
+      const v = getVendorById(vendorId);
+      if (!v) return;
+      const lang = getLang();
+      const vName = (lang === 'en' && v.name_en) ? v.name_en : v.name;
+
+      document.getElementById('locationModalVendorName').textContent = lang === 'vi'
+        ? `${v.name} – Địa Chỉ & Hướng Dẫn Di Chuyển`
+        : `${vName} – Address & Travel Directions`;
+      
+      const addr = (lang === 'vi' ? v.address_vi : v.address_en) || v.address_vi || v.location_vi || '';
+      const dirs = (lang === 'vi' ? v.directions_vi : v.directions_en) || v.directions_vi || (lang === 'vi' ? 'Dễ dàng di chuyển bằng ô tô, taxi hoặc xe máy. Có bãi đỗ xe rộng rãi thuận tiện cho khách sự kiện.' : 'Easily accessible by car, taxi or motorbike with spacious parking on site.');
+      const mapUrl = v.mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(v.name + ' Hà Nội')}`;
+
+      document.getElementById('locationModalAddress').textContent = addr;
+      document.getElementById('locationModalDirections').textContent = dirs;
+      document.getElementById('locationModalMapLink').href = mapUrl;
+
+      const photos = (v.locationPhotos && v.locationPhotos.length > 0) ? v.locationPhotos : (v.portfolio || [v.image]);
+      
+      document.getElementById('locationPhotosGrid').innerHTML = photos.map((imgUrl, i) => `
+        <div class="location-photo-item">
+          <img src="${imgUrl}" alt="${vName} venue photo ${i + 1}" loading="lazy">
+        </div>
+      `).join('');
+
+      document.getElementById('locationModal').classList.add('active');
+    }
+
+    function closeLocationModal(e) {
+      if (e && e.target && e.target !== document.getElementById('locationModal')) return;
+      document.getElementById('locationModal').classList.remove('active');
+    }
+
+    // Modal 3: Reviews
+    // Modal 3: Reviews (Diverse reviews with Foreign feedback strictly in English)
+    let currentModalVendorReviews = [];
+    let currentModalReviewFilter = 'all';
+
+    function openReviewsModal(vendorId) {
+      activeVendorId = vendorId;
+      const v = getVendorById(vendorId);
+      if (!v) return;
+      const lang = getLang();
+      const vName = (lang === 'en' && v.name_en) ? v.name_en : v.name;
+
+      document.getElementById('reviewsModalVendorName').textContent = lang === 'vi'
+        ? `${v.name} – Đánh Giá & Phản Hồi Từ Khách Hàng`
+        : `${vName} – Client Reviews & Feedback`;
+
+      // Get rich list of reviews using vendor_reviews engine
+      currentModalVendorReviews = typeof getReviewsForVendor === 'function' ? getReviewsForVendor(v) : [];
+      currentModalReviewFilter = 'all';
+
+      // Update Summary Info
+      const scoreEl = document.getElementById('reviewsModalScore');
+      if (scoreEl) scoreEl.textContent = (v.rating || 4.9).toFixed(1);
+      const subEl = document.getElementById('reviewsModalCountSubtitle');
+      if (subEl) {
+        subEl.textContent = lang === 'vi'
+          ? `Dựa trên ${v.reviewCount || 680}+ lượt trải nghiệm thực tế đã xác thực qua Momently`
+          : `Based on ${v.reviewCount || 680}+ verified client bookings via Momently`;
+      }
+
+      toggleAddReviewBox(false);
+      renderModalReviewsList();
+
+      document.getElementById('reviewsModal').classList.add('active');
+    }
+
+    function renderModalReviewsList() {
+      const container = document.getElementById('reviewsModalList');
+      if (!container) return;
+      const lang = getLang();
+
+      let list = currentModalVendorReviews;
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:24px;color:var(--color-text-muted);font-size:13px;">${lang === 'vi' ? 'Chưa có đánh giá nào.' : 'No reviews yet.'}</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(r => {
+        const stars = '★'.repeat(Math.min(5, Math.floor(r.rating || 5))) + '☆'.repeat(Math.max(0, 5 - Math.min(5, Math.floor(r.rating || 5))));
+        const reviewerName = r.name || (lang === 'vi' ? 'Khách hàng Momently' : 'Momently Client');
+        const originStr = r.origin || (lang === 'vi' ? 'Hà Nội, Việt Nam 🇻🇳' : 'Hanoi, Vietnam 🇻🇳');
+        const dateStr = lang === 'vi' ? (r.date_vi || 'Gần đây') : (r.date_en || 'Recent');
+        const eventStr = lang === 'vi' ? (r.event_vi || 'Sự kiện') : (r.event_en || 'Event');
+        
+        // CRITICAL: Foreign customer feedback is ALWAYS IN ENGLISH as requested!
+        const commentStr = r.isForeign 
+          ? (r.comment_en || r.comment_vi)
+          : (lang === 'vi' ? (r.comment_vi || r.comment_en) : (r.comment_en || r.comment_vi));
+
+        return `
+          <div class="review-item-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
+              <div>
+                <div style="font-size:14px;font-weight:700;color:var(--color-secondary);display:flex;align-items:center;flex-wrap:wrap;">
+                  <span>${r.avatar || '👤'} ${reviewerName}</span>
+                </div>
+                <div style="font-size:11px;color:var(--color-text-muted);margin-top:2px;">
+                  📍 ${originStr} • <span>${eventStr}</span>
+                </div>
+              </div>
+              <span style="font-size:11px;color:var(--color-text-muted);">${dateStr}</span>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+              <span style="color:#0284C7;font-size:14px;letter-spacing:1px;">${stars}</span>
+              <span style="font-weight:700;font-size:12.5px;color:var(--color-secondary);">${(r.rating || 5.0).toFixed(1)}</span>
+              <span style="font-size:10.5px;color:#16a34a;background:rgba(22,163,74,0.1);padding:1px 6px;border-radius:4px;font-weight:600;">✓ Đã kiểm chứng qua Momently</span>
+            </div>
+
+            <div style="font-size:13.5px;color:var(--color-text);line-height:1.55;font-style:italic;">
+              "${commentStr}"
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleAddReviewBox(forceOpen) {
+      const box = document.getElementById('addReviewFormBox');
+      if (!box) return;
+      const willOpen = (typeof forceOpen === 'boolean') ? forceOpen : (box.style.display === 'none' || !box.style.display);
+      box.style.display = willOpen ? 'block' : 'none';
+      const btn = document.getElementById('btnToggleAddReview');
+      if (btn) {
+        btn.textContent = willOpen 
+          ? (getLang() === 'vi' ? '✕ Đóng khung đánh giá' : '✕ Close review form')
+          : (getLang() === 'vi' ? '✍️ Viết đánh giá của bạn' : '✍️ Write a review');
+      }
+    }
+
+    function handleNewVendorReview(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const name = document.getElementById('newRevName').value.trim();
+      const origin = document.getElementById('newRevOrigin').value.trim();
+      const rating = parseFloat(document.getElementById('newRevRating').value) || 5;
+      const eventName = document.getElementById('newRevEvent').value.trim() || 'Sự kiện kỷ niệm';
+      const comment = document.getElementById('newRevComment').value.trim();
+
+      if (!name || !comment) return;
+
+      const isForeign = /[a-zA-Z]/.test(origin) && !origin.toLowerCase().includes('vietnam') && !origin.toLowerCase().includes('việt nam');
+
+      const newRev = {
+        name: name,
+        origin: origin,
+        isForeign: isForeign,
+        avatar: isForeign ? '🌐' : '👤',
+        rating: rating,
+        date_vi: 'Vừa xong',
+        date_en: 'Just now',
+        event_vi: eventName,
+        event_en: eventName,
+        comment_vi: comment,
+        comment_en: comment,
+        verified: true
+      };
+
+      // Save to localStorage
+      try {
+        const savedKey = 'momently_vendor_reviews_' + activeVendorId;
+        const currentSaved = JSON.parse(localStorage.getItem(savedKey) || '[]');
+        currentSaved.unshift(newRev);
+        localStorage.setItem(savedKey, JSON.stringify(currentSaved));
+      } catch (err) {
+        console.warn('Error saving new review', err);
+      }
+
+      currentModalVendorReviews.unshift(newRev);
+      toggleAddReviewBox(false);
+      renderModalReviewsList();
+
+      showToast(getLang() === 'vi' ? 'Cảm ơn bạn đã gửi đánh giá!' : 'Thank you for submitting your review!', 'success');
+      
+      document.getElementById('newRevName').value = '';
+      document.getElementById('newRevOrigin').value = '';
+      document.getElementById('newRevEvent').value = '';
+      document.getElementById('newRevComment').value = '';
+    }
+
+    function closeReviewsModal(e) {
+      if (e && e.target && e.target !== document.getElementById('reviewsModal')) return;
+      document.getElementById('reviewsModal').classList.remove('active');
+    }
+
+    // Modal 4: Contact Organizer
+    function openContactModal(vendorId) {
+      activeVendorId = vendorId || activeVendorId;
+      document.getElementById('contactModal').classList.add('active');
+    }
+
+    function closeContactModal(e) {
+      if (e && e.target && e.target !== document.getElementById('contactModal')) return;
+      document.getElementById('contactModal').classList.remove('active');
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const lang = getLang();
+      const name = document.getElementById('ctName').value.trim();
+      const phone = document.getElementById('ctPhone').value.trim();
+      const date = document.getElementById('ctDate').value;
+      const notes = document.getElementById('ctNotes').value.trim();
+
+      const v = activeVendorId ? getVendorById(activeVendorId) : null;
+      const vName = v ? ((lang === 'en' && v.name_en) ? v.name_en : v.name) : (lang === 'vi' ? 'Địa điểm tổng quát' : 'General Venue');
+
+      // Simulate sending consultation mail
+      showToast(lang === 'vi' 
+        ? `✨ Đã gửi yêu cầu tư vấn thành công! Ban tổ chức sẽ liên hệ lại quý khách qua số ${phone} hoặc Zalo.` 
+        : `✨ Consultation request sent successfully! Our organizers will contact you shortly via ${phone} or Zalo.`, 'success');
+      closeContactModal();
+
+      // Trigger mailto link for direct dispatch to nhitdnf14.38ftu@gmail.com
+      const mailSubject = encodeURIComponent(lang === 'vi' 
+        ? `[Momently Tư Vấn] Yêu cầu từ khách hàng ${name} - ${vName}`
+        : `[Momently Consultation] Request from ${name} - ${vName}`);
+      const mailBody = encodeURIComponent(lang === 'vi'
+        ? `Kính gửi Ban Tổ Chức Momently,\n\nKhách hàng yêu cầu tư vấn sự kiện:\n- Họ tên: ${name}\n- Điện thoại/Zalo: ${phone}\n- Ngày dự kiến: ${date || 'Chưa xác định'}\n- Địa điểm/Đối tác quan tâm: ${vName}\n- Ghi chú: ${notes}\n\nTrân trọng!`
+        : `Dear Momently Organizing Committee,\n\nClient consultation request:\n- Full Name: ${name}\n- Phone/Zalo: ${phone}\n- Expected Date: ${date || 'TBD'}\n- Partner/Venue of interest: ${vName}\n- Notes: ${notes}\n\nBest regards!`);
+      const mailtoLink = `mailto:nhitdnf14.38ftu@gmail.com?subject=${mailSubject}&body=${mailBody}`;
+      
+      setTimeout(() => {
+        const confirmMsg = lang === 'vi' 
+          ? "Bạn có muốn mở ứng dụng email để gửi bản sao tới Ban Tổ Chức (nhitdnf14.38ftu@gmail.com) ngay không?"
+          : "Would you like to open your email client to send a copy to the organizing team (nhitdnf14.38ftu@gmail.com)?";
+        if (confirm(confirmMsg)) {
+          window.location.href = mailtoLink;
+        }
+      }, 500);
+    }
+
+    // Modal 5: Portfolio
+    function openPortfolioModal(vendorId) {
+      const v = getVendorById(vendorId);
+      if (!v) return;
+      const lang = getLang();
+      const vName = (lang === 'en' && v.name_en) ? v.name_en : v.name;
+
+      document.getElementById('modalVendorTitle').textContent = `${vName} – Portfolio`;
+      document.getElementById('modalVendorDesc').textContent = (lang === 'vi' ? v.description_vi : v.description_en) || v.description_vi || '';
+      
+      const portfolioImgs = (v.portfolio && v.portfolio.length > 0) ? v.portfolio : [v.image];
+      document.getElementById('modalPortfolioGrid').innerHTML = portfolioImgs.map(img => `
+        <img src="${img}" alt="${vName} portfolio" loading="lazy">
+      `).join('');
+
+      const mapUrl = v.mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(v.name + ' Hà Nội')}`;
+      document.getElementById('modalPortfolioMapsLink').href = mapUrl;
+
+      document.getElementById('portfolioModal').classList.add('active');
+    }
+
+    function closePortfolioModal(e) {
+      if (e && e.target && e.target !== document.getElementById('portfolioModal')) return;
+      document.getElementById('portfolioModal').classList.remove('active');
+    }
+
+    // Initialize
+    initFilters();
+    renderVendors();
+
+    function onLangChange() {
+      populateWards();
+      renderVendors();
+    }
+    window.addEventListener('langchange', () => {
+      onLangChange();
+    });
+  </script>
+</body>
+</html>
